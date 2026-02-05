@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Oak — Jardin du Temps</title>
+
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Aboreto&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+<header class="top">
+  <h1>Jardin du Temps</h1>
+</header>
+
+<div class="oak-layout">
+
+  <!-- LEFT -->
+  <aside class="info left">
+    <h3>Species</h3>
+    <p><strong>Quercus</strong></p>
+
+    <h3>Environment</h3>
+    <p>
+      Temperate forests<br/>
+      Moderate rainfall<br/>
+      Seasonal climate
+    </p>
+  </aside>
+
+  <!-- CENTER -->
+  <main class="center">
+
+    <!-- viewer + slider = ONE BLOCK -->
+    <div class="viewer-block">
+      <div id="viewer"></div>
+
+      <div class="age-control">
+        <label>Tree Age</label>
+        <input type="range" min="1" max="100" value="1" id="ageSlider" />
+        <span id="ageLabel">1 year</span>
+      </div>
+    </div>
+
+    <!-- THIS creates long scroll time -->
+    <div class="scroll-space"></div>
+
+  </main>
+
+  <!-- RIGHT -->
+  <aside class="info right">
+    <h3>Description</h3>
+    <p>
+      Oaks are long-living trees whose growth reflects the
+      slow accumulation of time. This simulation treats growth
+      as an experiential journey rather than a biological model.
+    </p>
+  </aside>
+
+  <div class="stage-dots">
+  <span></span>
+  <span></span>
+  <span></span>
+  <span></span>
+  <span></span>
+</div>
+
+</div>
+
+<script src="oak.js"></script>
+
+</body>
+</html>
