@@ -1,3 +1,6 @@
+import { generateTreeParameters } from './createTree.js';
+
+
 console.log("Oak page script loaded");
 
 const container = document.getElementById("tree-viewer");
@@ -33,11 +36,24 @@ scene.add(cube);
 // render
 function animate() {
   requestAnimationFrame(animate);
-  cube.rotation.y += 0.01;
   renderer.render(scene, camera);
 }
-animate();
 
 
 
-hiiiiiii
+let startYear = 2000;
+
+function updateTree(year) {
+
+  let params = generateTreeParameters(year, startYear);
+
+  createTree(
+    params.height,
+    params.branchCount,
+    params.leafDensity,
+    params.trunkRadius
+  );
+}
+
+
+
