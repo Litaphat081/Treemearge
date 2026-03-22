@@ -1,0 +1,61 @@
+{
+  "species": "Quercus robur",
+  "commonName": "English Oak (Tall Form)",
+
+  "age": {
+    "min": 1,
+    "max": 500,
+    "unit": "yr"
+  },
+
+  "trunk": {
+    "heightAtMaturity_m": 38,
+    "heightGrowth_m_per_year": 0.45,
+    "maxGirthCircumference_m": 8.5,
+    "girthGrowth_cm_per_year": 2.0,
+    "barkColor": "#4a3728"
+  },
+
+  "branch": {
+
+    "primaryAngle_deg": 45,
+
+    "secondaryAngle_deg": 30,
+
+    "segmentLength_m": 2.2,
+
+    "taperRatio": 0.75
+
+  },
+  "crown": {
+  "baseHeightRatio": 0.6,
+  "radiusAtMaturity_m": 10
+},
+
+  "branching": {
+
+    "primaryBranchCount": 6,
+
+    "spiralAngle_deg": 137.5,
+
+    "gravityAngle_deg": 10
+
+  },
+
+  "growth": {
+    "maxDepthByAge": {
+      "1": 0,
+      "5": 1,
+      "15": 2,
+      "30": 3,
+      "60": 4,
+      "120": 5,
+      "250": 6,
+      "500": 7
+    }
+  },
+
+  "scale": {
+    "metersPerUnit": 1
+  }
+}

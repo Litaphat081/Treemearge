@@ -20,6 +20,13 @@ body {
   
 }
 
+
+#viewer {
+  width: 100%;
+  height: 100vh;   /* เต็มหน้าจอ */
+}
+
+
 .oak-layout {
   display: grid;
   grid-template-columns: 1fr 2fr 1fr;
