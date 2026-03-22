@@ -1,0 +1,66 @@
+{
+  "species": "Quercus robur",
+  "commonName": "English Oak",
+
+  "age": {
+    "min": 1,
+    "max": 100,
+    "unit": "year"
+  },
+
+  "trunk": {
+    "heightAtMaturity_m": 35,
+    "heightGrowth_m_per_year": 0.35,
+    "maxGirthCircumference_m": 9,
+    "girthGrowth_cm_per_year": 2.2,
+    "barkColor": "#5c3a21"
+  },
+
+  "branch": {
+    "primaryAngle_deg": 65,
+    "secondaryAngle_deg": 40,
+    "segmentLength_m": 1.6,
+    "taperRatio": 0.85
+  },
+
+  "branching": {
+    "primaryBranchCount": 8,
+    "spiralAngle_deg": 137.5,
+    "gravityAngle_deg": 18
+  },
+
+  "crown": {
+    "baseHeightRatio": 0.45,
+    "radiusAtMaturity_m": 14,
+    "density": 1.2
+  },
+
+  "leaf": {
+    "size": 0.12,
+    "clusterDensity": 1.5,
+    "color": "#2d6e1f"
+  },
+
+  "growth": {
+    "maxDepthByAge": {
+      "1": 0,
+      "5": 1,
+      "15": 2,
+      "30": 3,
+      "60": 4,
+      "120": 5,
+      "250": 6,
+      "500": 7
+    }
+  },
+
+  "environment": {
+    "sunPreference": "full sun",
+    "waterNeeds": "medium",
+    "soil": "loamy, well-drained"
+  },
+
+  "scale": {
+    "metersPerUnit": 1
+  }
+}

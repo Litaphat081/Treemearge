@@ -6,13 +6,28 @@
 
   <link rel="stylesheet" href="style.css" />
   <script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Leckerli+One&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Aboreto&display=swap" rel="stylesheet">
 
 </head>
 
-<body>
+<body>  
+
+
+
+
 <header class="top">
+  <nav class="side-back-slider">
+    <a href="../web/index.html" class="back-link">
+      <div class="arrow-icon">←</div>
+      <div class="line-separator"></div>
+    </a>
+  </nav>
+
   <h1>Jardin du Temps</h1>
+  <h2 id="tree-name" class="tree-title"></h2>
 </header>
 
 <div class="oak-layout">
@@ -20,14 +35,11 @@
   <!-- LEFT -->
   <aside class="info left">
     <h3>Species</h3>
-    <p><strong>Quercus</strong></p>
+    <p><strong id="tree-species"></strong></p>
+
 
     <h3>Environment</h3>
-    <p>
-      Temperate forests<br/>
-      Moderate rainfall<br/>
-      Seasonal climate
-    </p>
+    <p id="tree-environment"></p>
   </aside>
 
   <!-- CENTER -->
@@ -39,8 +51,9 @@
 
       <div class="age-control">
         <label>Tree Age</label>
-        <input type="range" min="1" max="100" value="1" id="ageSlider" />
-        <span id="ageLabel">1 year</span>
+        <input type="range" id="ageSlider" />
+<span id="ageLabel"></span>
+
       </div>
     </div>
 
@@ -52,11 +65,7 @@
   <!-- RIGHT -->
   <aside class="info right">
     <h3>Description</h3>
-    <p>
-      Oaks are long-living trees whose growth reflects the
-      slow accumulation of time. This simulation treats growth
-      as an experiential journey rather than a biological model.
-    </p>
+    <p id="tree-description"></p>
   </aside>
 
   <div class="stage-dots">
@@ -69,7 +78,7 @@
 
 </div>
 
-<script src="oak.js"></script>
+<script type="module" src="oak-algorithm.js"></script>
 
 </body>
 </html>

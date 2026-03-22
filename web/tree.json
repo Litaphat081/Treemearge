@@ -1,0 +1,13 @@
+{
+  "oak": {
+    "name": "Oak",
+    "species": "Quercus",
+    "environment": "Temperate forests\nModerate rainfall\nSeasonal climate",
+    "description": "Oaks are long-living trees whose growth reflects the slow accumulation of time.",
+    "age": {
+      "min": 0,
+      "max": 100,
+      "unit": "years"
+    }
+  }
+}
