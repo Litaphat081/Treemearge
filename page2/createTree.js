@@ -1,3 +1,4 @@
+
 const THREE = window.THREE;
 
 function makeRNG(seed) {
@@ -236,5 +237,22 @@ function generateChildBranches(branch, sectionData) {
     trunkHeight,
     crownRadius:  Math.max(1.5, Math.min(age * 0.08, trunkHeight * 1.2)),
     maxDepth
+  };
+}
+
+export function generateTreeParameters(year, startYear) {
+
+  let age = year - startYear;
+
+  let height = 3 + age * 0.2;
+  let branchCount = 5 + Math.floor(age * 0.5);
+  let leafDensity = Math.min(1, age * 0.03);
+  let trunkRadius = 0.5 + age * 0.02;
+
+  return {
+    height,
+    branchCount,
+    leafDensity,
+    trunkRadius
   };
 }

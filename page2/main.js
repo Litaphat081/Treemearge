@@ -40,7 +40,6 @@ function animate() {
 }
 
 
-
 let startYear = 2000;
 
 function updateTree(year) {

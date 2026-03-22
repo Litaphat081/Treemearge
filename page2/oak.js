@@ -1,23 +1,26 @@
-import { createTree } from './createTree.js';
+/* ===============================
+    DOM ELEMENTS & SETUP
+================================ */
+import { generateTreeParameters } from './createTree.js';
 
-const container = document.getElementById('viewer');
-const slider    = document.getElementById('ageSlider');
-const label     = document.getElementById('ageLabel');
-const dots      = document.querySelectorAll('.stage-dots span');
+const container = document.getElementById("viewer");
+const slider = document.getElementById("ageSlider");
+const label = document.getElementById("ageLabel");
+const dots = document.querySelectorAll(".stage-dots span");
 
 let AGE_MIN, AGE_MAX, AGE_UNIT;
-let speciesData  = null;
-let stages       = [], currentStage = 0;
+let stages = [];
+let currentStage = 0;
+let speciesData = null;
 
+/* ===============================
+    THREE.JS SETUP
+================================ */
 const scene = new THREE.Scene();
-scene.background = null;
+scene.background = null; 
 
-const camera = new THREE.PerspectiveCamera(
-  55, container.clientWidth / container.clientHeight, 0.1, 200
-);
-// ปรับตำแหน่งกล้องให้สูงขึ้นเล็กน้อยเพื่อรองรับต้นไม้ที่สูงขึ้นเรื่อยๆ
-camera.position.set(0, 10, 25);
-camera.lookAt(0, 6, 0);
+const camera = new THREE.PerspectiveCamera(55, container.clientWidth / container.clientHeight, 0.1, 100);
+camera.position.z = 10;
 
 const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 renderer.setClearColor(0x000000, 0);
@@ -37,145 +40,153 @@ const leafMat  = new THREE.MeshStandardMaterial({ color: 0x2d6e1f, side: THREE.D
 let treeGroup = new THREE.Group();
 scene.add(treeGroup);
 
+/* ===============================
+    TREE BUILDING FUNCTIONS
+================================ */
 function createInstancedLeaves(positions) {
-  const leafCount = positions.length * 2;
-  const leafGeo = new THREE.PlaneGeometry(0.6, 0.5);
-  const instMesh = new THREE.InstancedMesh(leafGeo, leafMat, leafCount);
-  
-  const dummy = new THREE.Object3D();
-  let idx = 0;
+    const leafCount = positions.length * 2;
+    const leafGeo = new THREE.PlaneGeometry(0.6, 0.5);
+    const instMesh = new THREE.InstancedMesh(leafGeo, leafMat, leafCount);
+    const dummy = new THREE.Object3D();
+    let idx = 0;
 
-  for (const pos of positions) {
-    for (let k = 0; k < 2; k++) {
-      const leafSize = 0.8 + Math.random() * 0.4;
-      dummy.position.copy(pos);
-      dummy.rotation.set(
-        (Math.random() - 0.5) * 1.2,
-        k * Math.PI / 2 + Math.random() * 0.5,
-        (Math.random() - 0.5) * 1.2
-      );
-      dummy.scale.set(leafSize, leafSize, leafSize);
-      dummy.updateMatrix();
-      instMesh.setMatrixAt(idx++, dummy.matrix);
+    for (const pos of positions) {
+        for (let k = 0; k < 2; k++) {
+            const leafSize = 0.8 + Math.random() * 0.4;
+            dummy.position.copy(pos);
+            dummy.rotation.set(
+                (Math.random() - 0.5) * 1.2,
+                k * Math.PI / 2 + Math.random() * 0.5,
+                (Math.random() - 0.5) * 1.2
+            );
+            dummy.scale.set(leafSize, leafSize, leafSize);
+            dummy.updateMatrix();
+            instMesh.setMatrixAt(idx++, dummy.matrix);
+        }
     }
-  }
-  instMesh.instanceMatrix.needsUpdate = true;
-  return instMesh;
+    instMesh.instanceMatrix.needsUpdate = true;
+    return instMesh;
 }
 
-// --- จุดแก้ไขสำคัญ: ฟังก์ชัน buildTree ---
 function buildTree(age) {
-  const result = createTree(age, speciesData);
-  const group  = new THREE.Group();
+    // หมายเหตุ: ต้องมั่นใจว่าในไฟล์ createTree.js มีฟังก์ชัน createTree export ออกมาด้วย
+    if (typeof createTree === "undefined") {
+        console.warn("createTree function is not defined. Using placeholder logic.");
+        return new THREE.Group(); 
+    }
 
-  const trunkMesh = new THREE.Mesh(result.geometry, trunkMat);
-  trunkMesh.castShadow = true;
-  trunkMesh.receiveShadow = true;
-  group.add(trunkMesh);
+    const result = createTree(age, speciesData);
+    const group  = new THREE.Group();
 
-  if (result.leafPositions.length > 0) {
-    group.add(createInstancedLeaves(result.leafPositions));
-  }
+    const trunkMesh = new THREE.Mesh(result.geometry, trunkMat);
+    trunkMesh.castShadow = true;
+    trunkMesh.receiveShadow = true;
+    group.add(trunkMesh);
 
-  // --- แก้จุดที่ 1: ยกเลิกการยืด-หด Scale ตามความสูง (Auto-fit) ---
-  // เดิม: const scale = Math.min(1, (container.clientHeight * 0.8) / (maxH * 15));
-  // แก้เป็น: ใช้ Scale คงที่ หรือ Scale ที่โตขึ้นตามจริง เพื่อไม่ให้ยิ่งแก่ยิ่งเตี้ย
-  const fixedScale = 0.4; 
-  group.scale.set(fixedScale, fixedScale, fixedScale);
+    if (result.leafPositions.length > 0) {
+        group.add(createInstancedLeaves(result.leafPositions));
+    }
 
-  // --- แก้จุดที่ 2: ล็อกตำแหน่งฐาน (Pivot Point) ไว้ที่พื้น (y=0) ---
-  // เดิม: group.position.y = -result.trunkHeight * 0.4 * scale; (ตัวการที่ทำให้โตลงล่าง)
-  // แก้เป็น: 0 เสมอ เพราะใน createTree.js เราเริ่มวาดลำต้นจาก (0,0,0) ขึ้นไปแล้ว
-  group.position.y = -5; 
+    const fixedScale = 0.4; 
+    group.scale.set(fixedScale, fixedScale, fixedScale);
+    group.position.y = -5; // ล็อกฐานไว้ที่พื้น
 
-  return group;
+    return group;
 }
 
 function updateTree(age) {
-  if (!speciesData) return;
-  // ล้าง Memory ก่อนสร้างใหม่
-  scene.remove(treeGroup);
-  treeGroup.traverse(child => {
-    if (child.geometry) child.geometry.dispose();
-  });
-  
-  treeGroup = buildTree(age);
-  scene.add(treeGroup);
+    if (!speciesData) return;
+    scene.remove(treeGroup);
+    treeGroup.traverse(child => {
+        if (child.geometry) child.geometry.dispose();
+    });
+    
+    treeGroup = buildTree(age);
+    scene.add(treeGroup);
 }
 
+/* ===============================
+    UI & STAGE CONTROL
+================================ */
 function updateDots(idx) {
-  dots.forEach(d => d.classList.remove('active'));
-  if (dots[idx]) dots[idx].classList.add('active');
+    dots.forEach(d => d.classList.remove('active'));
+    if (dots[idx]) dots[idx].classList.add('active');
 }
 
 function setStage(idx) {
-  currentStage      = Math.max(0, Math.min(stages.length - 1, idx));
-  const age         = stages[currentStage].min;
-  slider.value      = age;
-  label.textContent = `${age} ${AGE_UNIT}`;
-  updateTree(age);
-  updateDots(currentStage);
+    currentStage = Math.max(0, Math.min(stages.length - 1, idx));
+    const age = stages[currentStage].min;
+    slider.value = age;
+    label.textContent = `${age} ${AGE_UNIT}`;
+    updateTree(age);
+    updateDots(currentStage);
 }
 
 slider.addEventListener('input', () => {
-  const age = Number(slider.value);
-  label.textContent = `${age} ${AGE_UNIT}`;
-  updateTree(age);
-});
-
-window.addEventListener('scroll', () => {
-  if (!stages.length || !speciesData) return;
-  const progress   = Math.min(window.scrollY / (document.documentElement.scrollHeight - window.innerHeight), 1);
-  const stageCount = stages.length;
-  const stage      = Math.min(stageCount - 1, Math.floor(progress * stageCount));
-
-  if (progress >= 0.999) {
-    const age = AGE_MAX;
-    slider.value      = age;
+    const age = Number(slider.value);
     label.textContent = `${age} ${AGE_UNIT}`;
     updateTree(age);
-    updateDots(stageCount - 1);
-    currentStage = stageCount - 1;
-  } else if (stage !== currentStage) {
-    setStage(stage);
-  }
 });
 
+/* ===============================
+    SCROLL LOGIC
+================================ */
+window.addEventListener('scroll', () => {
+    if (!stages.length || !speciesData) return;
+    const progress = Math.min(window.scrollY / (document.documentElement.scrollHeight - window.innerHeight), 1);
+    const stageCount = stages.length;
+    const stageIdx = Math.min(stageCount - 1, Math.floor(progress * stageCount));
+
+    if (progress >= 0.999) {
+        const age = AGE_MAX;
+        slider.value = age;
+        label.textContent = `${age} ${AGE_UNIT}`;
+        updateTree(age);
+        updateDots(stageCount - 1);
+        currentStage = stageCount - 1;
+    } else if (stageIdx !== currentStage) {
+        setStage(stageIdx);
+    }
+});
+
+/* ===============================
+    ANIMATION & LOAD DATA
+================================ */
 (function animate() {
-  requestAnimationFrame(animate);
-  if (treeGroup) treeGroup.rotation.y += 0.002;
-  renderer.render(scene, camera);
+    requestAnimationFrame(animate);
+    if (treeGroup) treeGroup.rotation.y += 0.002;
+    renderer.render(scene, camera);
 })();
 
 Promise.all([
-  fetch('./oak-data.json').then(r => r.json()),
-  fetch('./tree.json').then(r => r.json()),
+    fetch('./oak-data.json').then(r => r.json()),
+    fetch('./tree.json').then(r => r.json()),
 ])
 .then(([oakData, treeData]) => {
-  speciesData = oakData;
-  trunkMat.color.set(oakData.trunk.barkColor);
+    speciesData = oakData;
+    trunkMat.color.set(oakData.trunk.barkColor);
 
-  const oak = treeData.oak;
-  document.getElementById('tree-name').textContent         = oak.name;
-  document.getElementById('tree-species').textContent      = oak.species;
-  document.getElementById('tree-environment').innerHTML    = oak.environment.replace(/\n/g, '<br>');
-  document.getElementById('tree-description').textContent = oak.description;
+    const oak = treeData.oak;
+    document.getElementById('tree-name').textContent = oak.name;
+    document.getElementById('tree-species').textContent = oak.species;
+    document.getElementById('tree-environment').innerHTML = oak.environment.replace(/\n/g, '<br>');
+    document.getElementById('tree-description').textContent = oak.description;
 
-  AGE_MIN  = oakData.age.min;
-  AGE_MAX  = oakData.age.max;
-  AGE_UNIT = oakData.age.unit;
+    AGE_MIN  = oakData.age.min;
+    AGE_MAX  = oakData.age.max;
+    AGE_UNIT = oakData.age.unit;
 
-  slider.min   = AGE_MIN;
-  slider.max   = AGE_MAX;
-  slider.value = AGE_MIN;
-  label.textContent = `${AGE_MIN} ${AGE_UNIT}`;
+    slider.min = AGE_MIN;
+    slider.max = AGE_MAX;
+    slider.value = AGE_MIN;
+    label.textContent = `${AGE_MIN} ${AGE_UNIT}`;
 
-  const step = Math.floor((AGE_MAX - AGE_MIN + 1) / dots.length);
-  stages = Array.from({ length: dots.length }, (_, i) => ({
-    min: AGE_MIN + i * step,
-    max: i === dots.length - 1 ? AGE_MAX : AGE_MIN + (i + 1) * step - 1,
-  }));
+    const step = Math.floor((AGE_MAX - AGE_MIN + 1) / dots.length);
+    stages = Array.from({ length: dots.length }, (_, i) => ({
+        min: AGE_MIN + i * step,
+        max: i === dots.length - 1 ? AGE_MAX : AGE_MIN + (i + 1) * step - 1,
+    }));
 
-  setStage(0);
+    setStage(0);
 })
 .catch(err => console.error('Failed to load data:', err));
