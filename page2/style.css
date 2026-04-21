@@ -1,82 +1,29 @@
-@import url('https://fonts.googleapis.com/css2?family=Aboreto&family=Leckerli+One&display=swap');
-
 body {
   margin: 0;
-  background: #efe6d6; 
+  background: #E6D7C4;
   font-family: 'Aboreto', serif;
-  color: #2b2b2b;
+  color: #4B3D1A;
+  font-family: Georgia, serif;
 }
 
-
-/* ปรับ Header ให้รองรับตำแหน่งของปุ่ม */
 .top {
   background: #7b4a46;
-  color: #E6D7C4;
-  padding: 1rem;
-  text-align: center;
-  position: relative; /* สำคัญ: เพื่อให้ปุ่ม Back อ้างอิงตำแหน่งจากตรงนี้ */
-  overflow: visible;  /* ยอมให้ปุ่มยื่นออกมาด้านล่างได้ถ้าต้องการ */
-  min-height: 80px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* ปรับปุ่ม Back ให้ไปอยู่ใน Header */
-.side-back-slider {
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0; /* ให้ความสูงเท่ากับ Header */
-  display: flex;
-  align-items: center;
-}
-
-.back-link {
-  display: flex;
-  flex-direction: row; /* เปลี่ยนเป็นแนวนอนชั่วคราวเพื่อให้สอดคล้องกับ Header */
-  align-items: center;
-  padding: 0 20px;
-  background: #7b4a46;
-  height: 100%;
-  text-decoration: none;
-  color: #E6D7C4; /* ใช้สีเดียวกับฟอนต์ Header */
-  transition: background 0.3s;
-}
-
-.back-link:hover {
-  background: #9aa76d;
-}
-
-/* ถ้ายังอยากได้ Back เป็นแนวตั้งใน Header ให้ใช้ชุดนี้ครับ */
-.back-text {
-  writing-mode: vertical-rl;
-  text-orientation: mixed;
-  transform: rotate(180deg);
   font-family: 'Leckerli One', cursive;
-  font-size: 0.9rem;
-  letter-spacing: 1px;
+  letter-spacing: 0.05em;
+  color: #f5f0e6;
+  padding: 1.2rem;
+  text-align: center;
+
+  position: relative; 
+  overflow: visible;
+
+  
 }
 
-.line-separator {
-  width: 1px;         /* เปลี่ยนจากเส้นแนวนอนเป็นเส้นแนวตั้ง */
-  height: 20px;
-  background: #E6D7C4;
-  margin: 0 10px;
-  opacity: 0.5;
-}
 
-.arrow-icon {
-  font-size: 1.5rem;
-}
-
-/* เส้นขีดคั่นเล็กๆ เพิ่มดีเทล */
-.line-separator {
-  width: 20px;
-  height: 2px;
-  /* background: rgba(67, 76, 49, 0.3); */
-  margin: 8px 0;
-  border-radius: 2px;
+#viewer {
+  width: 100%;
+  height: 100vh;   /* เต็มหน้าจอ */
 }
 
 
@@ -108,35 +55,30 @@ body {
 
 
 .center {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  display: block; /* ⭐ เอา flex ออก */
 }
 
 /* viewer + slider move together */
 .viewer-block {
   width: 100%;
-  max-width: 700px;
-  margin: 3rem auto 0 auto;
+  height: 100vh;
+
+  position: sticky;
+  top: 0;
 
   display: flex;
   flex-direction: column;
+  justify-content: flex-end; /* ⭐ ดันทุกอย่างลงล่าง */
   align-items: center;
-
-  position: sticky;
-  top: 120px;
-  transition: transform 0.6s ease-out;
-  
 }
 
 
 /* IMPORTANT: give space for three.js */
-#viewer {
-  width: 100%;
-  height: 350px;
-  background: transparent;
-}
 
+.viewer-block {
+  height: 700px;
+  justify-content: space-between;
+}
 
 /* slider stays attached naturally */
 .age-control {
@@ -316,28 +258,35 @@ input[type="range"]:hover::-webkit-slider-runnable-track {
   pointer-events: none;
 }
 
-.container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center; /* ให้เริ่มจากด้านบนเหมือนกัน */
-  padding: 80px 5%;       /* เว้นระยะขอบบนและข้างให้สมดุล */
-  max-width: 1200px;      /* คุมความกว้างไม่ให้กระจายเกินไป */
-  margin: 0 auto;         /* จัดกึ่งกลางหน้าจอ */
+.back-btn {
+  position: fixed;          /* ลอยบนจอ */
+  top: 10px;                /* ห่างจากด้านบน */
+  left: 20px;               /* ห่างจากด้านซ้าย */
+  padding: 10px 16px;
+  background-color: #000;
+  color: #fff;
+  text-decoration: none;    /* เอาเส้นใต้ลิงก์ออก */
+  border-radius: 19px;
+  font-size: 12px;
+  z-index: 9999;            /* กันโดนของอื่นบัง */
+  transition: 0.2s;
 }
 
-.content {
-  width: 55%;             /* คุมความกว้างฝั่งซ้าย */
+.back-btn:hover {
+  background-color: #333;
+  transform: scale(1.05);
 }
-.poetic-panel {
-  width: 35%;             /* คุมความกว้างฝั่งขวา */
-  letter-spacing: 0.5px;
-  font-style: italic;
-  
-  /* แทนที่จะใช้ top: 500px ให้ใช้ margin-top แทน */
-  margin-top: 600px;      /* 👈 ลองปรับค่านี้ดูจนกว่าบรรทัดแรกจะตรงกับพุ่มไม้ */
-  
-  /* เพิ่มเติมเพื่อให้ดูละมุนขึ้น */
-  line-height: 1.6;
-  text-transform: uppercase; /* ตาม Reference ในรูปของคุณ */
-  opacity: 0.9;
+
+.tree-header {
+  text-align: center;
+  margin-top: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.tree-title {
+  font-family: 'Aboreto', serif;
+  font-size: 1.2rem;
+  letter-spacing: 0.25em;
+  color: #f5f0e6;
+  opacity: 0.85;
 }
