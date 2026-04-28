@@ -7,102 +7,87 @@
 </head>
 <body>
 
-<header>
+<header class="top-header">
   <h1>Jardin du Temps</h1>
 
-<div class="sprout-banner">
-<div class="tree-menu-board">
-  <ul>
-    <li><a href="../page2/oak.html">Oak</a></li>
-</div>
+  <div class="sprout-banner">
+    <div class="tree-menu-board">
+      <ul>
+        <li><a href="../page2/oak.html">Oak</a></li>
+        <li><a href="../page3/pine.html">Pine</a></li>
+      </ul>
+    </div>
 
-  <div class="main-banner-front">
-    <div class="sprout-bg"></div>
-    <img src="pic/baby-plant.png" class="sprout-icon" />
-    <div class="banner-lines">
-      <span></span><span></span><span></span>
+    <div class="main-banner-front">
+      <div class="sprout-bg"></div>
+      <img src="pic/baby-plant.png" class="sprout-icon" />
+      <div class="banner-lines">
+        <span></span><span></span><span></span>
+      </div>
     </div>
   </div>
-</div>
 </header>
 
 
-<div class="container">
+<section class="parallax-scene">
 
-  <!-- Main Content -->
-  <main class="content">
-    <h2>Welcome to Jardin du Temps</h2>
-    
-    <p>
-      Jardin du Temps is a digital gardent
-    </p>
+<!-- SKY -->
+<div class="layer layer-sky" data-speed="0.12">
+  <img class="season season-spring" src="pic/spring_sky.png" />
+  <img class="season season-summer" src="pic/summer_sky.png" />
+  <img class="season season-autumn" src="pic/autumn_sky.png" />
+  <img class="season season-winter" src="pic/winter_sky.png" />
+</div>
 
-    <p>
-      that explores the growth of trees
-       through time.
-    </p>
+<!-- CLOUD -->
+<div class="layer layer-cloud" data-speed="0.22">
+  <img class="season season-spring" src="pic/spring_cloud.png" />
+  <img class="season season-summer" src="pic/summer_cloud.png" />
+  <img class="season season-winter" src="pic/winter_cloud.png" />
+</div>
 
-    <p>
-      This website allows you to observe how a tree develops
-    </p>
+<!-- TREE -->
+<div class="layer layer-tree" data-speed="0.45">
+  <img class="season season-spring" src="pic/spring_tree.png" />
+  <img class="season season-summer" src="pic/summer_tree.png" />
+  <img class="season season-autumn" src="pic/autumn_tree.png" />
+  <img class="season season-winter" src="pic/winter_tree.png" />
+</div>
 
-    <p>
-      from its earliest stage to full maturity, and even into the future.
-    </p>
+<!-- GRASS -->
+<div class="layer layer-grass" data-speed="0.75">
+  <img class="season season-spring" src="pic/spring_grass.png" />
+  <img class="season season-summer" src="pic/summer_grass.png" />
+  <img class="season season-autumn" src="pic/autumn_grass.png" />
+  <img class="season season-winter" src="pic/winter_grass.png" />
+</div>
 
-    <p>
-      By selecting a tree species, you can learn about its biological 
-    </p>
 
-    <p>
-      characteristics, lifespan, and ecological role, 
-    </p>
+  <!-- TEXT CONTENT -->
+  <div class="scene-content">
+    <div class="left-block">
+      <h2>WELCOME TO JARDIN DU TEMPS</h2>
+      <p>Jardin du Temps is a digital garden</p>
+      <p>that explores the growth of trees through time.</p>
+      <p>This website allows you to observe how a tree develops</p>
+      <p>from its earliest stage to full maturity, and into the future.</p>
+    </div>
 
-    <p>
-      before entering
-      a time-based simulation of its growth.
-    </p>
-  
-    <img
-      src="pic/oak-tree.png"
-      alt="Tree illustration"
-      class="tree"
-    /> 
+    <div class="right-block">
+      <p>TIME FLOWS THROUGH SILENT BRANCHES,</p>
+      <p>UNSEEN, YET ALWAYS GROWING.</p>
+      <p>EACH RING HOLDS A MEMORY,</p>
+      <p>EACH LEAF A FLEETING MOMENT.</p>
+      <p>WHAT YOU SEE IS NOT JUST A TREE—</p>
+      <p>BUT TIME MADE VISIBLE.</p>
+    </div>
+  </div>
 
-    <div class="grass-footer">
-    </div> 
+</section>
 
-  </main>
 
-<!-- Right Poetic Panel -->
-  <aside class="poetic-panel">
-
-    <p>
-      Time flows through silent branches,
-    </p>
-
-    <p>
-      unseen, yet always growing.
-    </p>
-
-    <p>
-      Each ring holds a memory,
-    </p>
-
-    <p>
-      each leaf a fleeting moment.
-    </p>
-
-    <p>
-      What you see is not just a tree—
-    </p>
-
-    <p>
-      but time made visible.
-    </p>
-
-  </aside>
-</div>/
+<section class="scroll-space">
+</section>
 
 <script src="main.js"></script>
 </body>

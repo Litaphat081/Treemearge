@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Pine — Jardin du Temps</title>
+
+  <link rel="stylesheet" href="style.css" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Leckerli+One&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Aboreto&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+  <a href="../web/index.html" class="back-btn">← Back</a>
+
+  <header class="top">
+    <h1>Jardin du Temps</h1>
+    <h2 id="tree-name" class="tree-title"></h2>
+  </header>
+
+  <div class="oak-layout">
+
+    <!-- LEFT -->
+    <aside class="info left">
+      <h3>Species</h3>
+      <p><strong id="tree-species"></strong></p>
+
+      <h3>Environment</h3>
+      <p id="tree-environment"></p>
+    </aside>
+
+    <!-- CENTER -->
+    <main class="center">
+
+      <div class="viewer-block">
+        <div id="viewer"></div>
+
+        <div class="age-control">
+          <label>Tree Age</label>
+          <input type="range" id="ageSlider" />
+          <span id="ageLabel"></span>
+        </div>
+      </div>
+
+      <div class="scroll-space"></div>
+
+    </main>
+
+    <!-- RIGHT -->
+    <aside class="info right">
+      <h3>Description</h3>
+      <p id="tree-description"></p>
+    </aside>
+
+    <div class="stage-dots">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script type="module" src="./pine.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,55 @@
+{
+  "species": "Pinus sylvestris",
+  "commonName": "Scots Pine",
+
+  "seed": 55577,
+
+  "age": {
+    "min": 1,
+    "max": 500,
+    "unit": "year"
+  },
+
+  "trunk": {
+    "heightAtMaturity_m": 35,
+    "heightGrowth_m_per_year": 0.5,
+    "maxGirthCircumference_m": 3.5,
+    "girthGrowth_cm_per_year": 1.2,
+    "barkColor": "#7a5230"
+  },
+
+  "branch": {
+    "primaryAngle_deg": 70,
+    "secondaryAngle_deg": 55,
+    "segmentLength_m": 1.8,
+    "taperRatio": 0.70
+  },
+
+  "crown": {
+    "baseHeightRatio": 0.45,
+    "radiusAtMaturity_m": 5
+  },
+
+  "branching": {
+    "primaryBranchCount": 5,
+    "spiralAngle_deg": 137.5,
+    "gravityAngle_deg": 5
+  },
+
+  "growth": {
+    "maxDepthByAge": {
+      "1": 0,
+      "5": 1,
+      "15": 2,
+      "30": 3,
+      "60": 4,
+      "120": 5,
+      "250": 6,
+      "500": 7
+    }
+  },
+
+  "scale": {
+    "metersPerUnit": 1
+  }
+}

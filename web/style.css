@@ -2,47 +2,148 @@
 
 body {
   margin: 0;
-  background: #efe6d6; 
   font-family: 'Aboreto', serif;
-  color: #2b2b2b;
+  background: #efe6d6;
+  overflow-x: hidden;
 }
 
-header {
+/* HEADER */
+.top-header {
   background: #7b4a46;
   font-family: 'Leckerli One', cursive;
-  letter-spacing: 0.05em;
   color: #f5f0e6;
   padding: 1.2rem;
   text-align: center;
-  letter-spacing: 0.1em;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
 
+/* PARALLAX SCENE */
+.parallax-scene {
   position: relative;
-  overflow: visible;
+  height: 500vh;   /* ⭐ เพิ่มเพื่อให้ 4 ฤดูไหลลื่น */
+  overflow: hidden;
 }
 
 
-.container {
+/* LAYER BASE */
+.layer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.layer img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.layer-grass {
+  z-index: 20;
+}
+
+.layer-grass .grass {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 220px;              /* ⭐ ปรับความสูง grass */
+  opacity: 0;
+  transition: opacity 0.35s linear;
+
+  background-repeat: repeat-x;      /* ⭐ ต่อกันซ้ายขวา */
+  background-position: bottom;
+  background-size: auto 100%;       /* ให้สูงเต็ม div */
+}
+
+
+/* SEASONS */
+.season {
+  opacity: 0;
+  transition: opacity 0.35s linear;
+}
+
+/* Z-INDEX */
+.layer-sky { z-index: 10; }
+.layer-cloud { z-index: 15; }
+.layer-tree { z-index: 20; }
+.layer-grass { z-index: 30; }
+
+
+/* TEXT */
+.scene-content {
+  position: relative;
+  z-index: 50;
   display: flex;
-  min-height: calc(100vh - 80px);
+  justify-content: space-between;
+  padding: 5rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  gap: 4rem;
 }
 
+.left-block {
+  width: 55%;
+  background: rgba(239, 230, 214, 0.65);
+  padding: 2rem;
+  border-radius: 16px;
+  backdrop-filter: blur(6px);
+}
 
+.left-block h2 {
+  margin-top: 0;
+  font-size: 28px;
+}
+
+.left-block p {
+  margin: 0;
+  line-height: 1.8;
+}
+
+.right-block {
+  width: 35%;
+  background: rgba(239, 230, 214, 0.55);
+  padding: 2rem;
+  border-radius: 16px;
+  backdrop-filter: blur(6px);
+}
+
+.right-block p {
+  margin: 0;
+  line-height: 1.8;
+  letter-spacing: 0.08em;
+  font-size: 13px;
+}
+
+/* SCROLL SPACE */
+.scroll-space {
+  position: relative;
+  z-index: 60;
+  min-height: 200vh;
+  padding: 6rem;
+  background: transparent;  /* ⭐ เอาครีมออก */
+}
+
+/* ---------------- Sprout Banner (ของเดิมคุณ) ---------------- */
 .sprout-banner {
   position: absolute;
-  top: 0; 
+  top: 0;
   right: 2rem;
   width: 72px;
-  height: 220px; /* เพิ่มความยาวรวม */
-  
-  /* ให้แบนเนอร์โผล่พ้น header ลงมาแค่ประมาณ 40px หรือเท่าที่คุณต้องการ */
-  /* โดยใช้ค่าลบขยับขึ้นไปซ่อนไว้ด้านบน */
-  transform: translateY(-160px); 
-  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* เพิ่มลูกเล่นเด้งนิดๆ */
-  z-index: 10;
+  height: 220px;
+  transform: translateY(-160px);
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  z-index: 999;
   cursor: pointer;
 }
 
-/* เมื่อ Hover ให้เลื่อนลงมาชิดขอบบนสุดพอดี */
 .sprout-banner:hover {
   transform: translateY(0);
 }
@@ -52,31 +153,19 @@ header {
   top: 0;
   left: 5px;
   right: 5px;
-  background: #CFBB9A; /* สีครีมเข้ม */
-  border-top: 0;
+  background: #CFBB9A;
   border-radius: 0 0 36px 36px;
   padding: 20px 10px 10px 10px;
-  
-  /* ซ่อนไว้ข้างหลังแผ่นหลัก */
-  transform: translateY(-100%); 
+  transform: translateY(-100%);
   opacity: 0;
   transition: all 0.5s ease;
   z-index: 1;
 }
 
 .sprout-banner:hover .tree-menu-board {
-  transform: translateY(200px); /* เลื่อนลงมาต่อท้ายแผ่นแรก */
+  transform: translateY(200px);
   opacity: 1;
-  transition-delay: 0.1s; /* ให้แผ่นแรกเริ่มเดินก่อนนิดนึง */
-}
-
-/* --- ตกแต่งรายการเมนู --- */
-.tree-menu-board h4 {
-  font-size: 12px;
-  color: #5d6344;
-  margin-bottom: 8px;
-  text-align: center;
-  text-transform: uppercase;
+  transition-delay: 0.1s;
 }
 
 .tree-menu-board ul {
@@ -107,20 +196,19 @@ header {
   width: 100%;
   height: 100%;
   background: #9aa76d;
-  border-radius: 0 0 36px 36px; /* ปรับมนให้สวยขึ้น */
+  border-radius: 0 0 36px 36px;
   z-index: 1;
 }
 
 .sprout-icon {
   position: absolute;
-  bottom: 60px; /* ขยับขึ้นเพื่อเว้นที่ให้ 3 ขีด */
+  bottom: 60px;
   left: 50%;
   transform: translateX(-50%);
   width: 45px;
   z-index: 2;
 }
 
-/* --- ส่วนของ 3 ขีดล่างรูปต้นอ่อน --- */
 .banner-lines {
   position: absolute;
   bottom: 20px;
@@ -140,81 +228,27 @@ header {
   border-radius: 2px;
 }
 
-
-
-.content {
-  flex: 1;
-  padding: 2rem;
+/* ⭐ FIX: make winter grass bigger + always visible */
+.layer-grass .season-winter {
+  transform: scale(1.25);       /* เพิ่มขนาด */
+  object-position: bottom;      /* ดันไปล่าง */
 }
 
-.dropdown {
-  display: none;
-  margin-top: 0.5rem;
+/* เผื่อ winter tree ด้วย ให้ดูเต็มขึ้น */
+.layer-tree .season-winter {
+  transform: scale(1.1);
+  object-position: bottom;
 }
 
-.dropdown.show {
-  display: block;
+/* ⭐ ให้ทุก layer ยึดด้านล่าง */
+.layer-sky img,
+.layer-cloud img,
+.layer-tree img,
+.layer-grass img {
+  object-position: bottom;
 }
 
-button {
-  width: 100%;
-  padding: 0.6rem;
-  margin-bottom: 0.5rem;
-  cursor: pointer;
-}
-
-.hint {
-  margin-top: 2rem;
-  font-style: italic;
-  color: #555;
-}
-.tree-button {
-  width: 120px;        /* ปรับตามใจ */
-  cursor: pointer;
-  display: block;
-  margin-bottom: 1rem;
-  transition: transform 0.2s ease, opacity 0.2s ease;
-}
-
-.tree-button:hover {
-  transform: scale(1.05);
-  opacity: 0.9;
-}
-
-
-.tree {
-  position: fixed;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-
-  height: 60vh;        /* ปรับตามขนาดรูป */
-  max-height: 500px;
-
-  pointer-events: none; /* กันบังการคลิก */
-  z-index: 1;
-}
-
-.grass-footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;          /* เต็มความกว้างหน้าจอ */
-  height: 100px;         /* ความสูงเท่าเดิมที่คุณชอบ */
-  
-  /* ใส่รูปหญ้าเป็นพื้นหลัง */
-  background-image: url('pic/grass.png');
-  
-  /* ⭐ สั่งให้รูปต่อกันไปทางขวา */
-  background-repeat: repeat-x; 
-  
-  /* ปรับขนาดรูปหญ้าในแต่ละบล็อกให้พอดีกับความสูง */
-  background-size: contain; 
-  
-  /* ให้หญ้าอยู่ตำแหน่งล่างสุดของ div */
+.layer-grass .grass {
   background-position: bottom;
-  
-  z-index: -1;          /* อยู่หลังต้นไม้ */
-  pointer-events: none;
 }
 
