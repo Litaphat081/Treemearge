@@ -16,22 +16,18 @@ body {
 
   position: relative; 
   overflow: visible;
-
-  
 }
 
 
 #viewer {
   width: 100%;
-  height: 100vh;   /* เต็มหน้าจอ */
+  height: 100vh;
 }
 
 
 .oak-layout {
   display: grid;
   grid-template-columns: 1fr 2fr 1fr;
-
-  /* สำคัญมาก */
   align-items: start;
   min-height: 500vh;
 }
@@ -40,12 +36,13 @@ body {
   padding: 2rem;
   font-size: 0.9rem;
 
-   display: flex;
+  display: flex;
   flex-direction: column;
   align-items: center;
 
   position: sticky;
-  top: 120px;
+  top: 50%;                    
+  transform: translateY(-50%); 
 }
 
 .info p strong {
@@ -53,9 +50,8 @@ body {
 }
 
 
-
 .center {
-  display: block; /* ⭐ เอา flex ออก */
+  display: block;
 }
 
 /* viewer + slider move together */
@@ -68,27 +64,22 @@ body {
 
   display: flex;
   flex-direction: column;
-  justify-content: flex-end; /* ⭐ ดันทุกอย่างลงล่าง */
+  justify-content: flex-end;
   align-items: center;
 }
-
-
-/* IMPORTANT: give space for three.js */
 
 .viewer-block {
   height: 700px;
   justify-content: space-between;
 }
 
-/* slider stays attached naturally */
 .age-control {
   margin-top: 1rem;
   text-align: center;
 }
 
-/* this is TIME */
 .scroll-space {
-  height: 500vh; /* ≈ 5 growth stages */
+  height: 500vh;
 }
 
 /* Hide native scrollbar everywhere */
@@ -96,14 +87,14 @@ html,
 body,
 .oak-layout,
 .center {
-  scrollbar-width: none;        /* Firefox */
-  -ms-overflow-style: none;     /* IE / Edge */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 body::-webkit-scrollbar,
 .oak-layout::-webkit-scrollbar,
 .center::-webkit-scrollbar {
-  display: none;                /* Chrome / Safari */
+  display: none;
 }
 
 .stage-dots {
@@ -118,7 +109,6 @@ body::-webkit-scrollbar,
   z-index: 100;
 }
 
-/* เส้นเชื่อม */
 .stage-dots::before {
   content: "";
   position: absolute;
@@ -129,7 +119,6 @@ body::-webkit-scrollbar,
   z-index: -1;
 }
 
-/* dot ปกติ */
 .stage-dots span {
   width: 6px;
   height: 6px;
@@ -138,14 +127,13 @@ body::-webkit-scrollbar,
   transition: all 0.3s ease;
 }
 
-/* dot ที่ active */
 .stage-dots span.active {
   width: 10px;
   height: 10px;
   background: #364025;
 }
 
-/* ===== Custom Slider Style ===== */
+/* Custom Slider Style */
 
 input[type="range"] {
   -webkit-appearance: none;
@@ -156,12 +144,10 @@ input[type="range"] {
   cursor: pointer;
 }
 
-/* TRACK */
 input[type="range"]::-webkit-slider-runnable-track {
   height: 9px;
-
   border-radius: 20px;
-   background: linear-gradient(
+  background: linear-gradient(
     90deg,
     #cedfcc 0%,
     #9ec981 50%,
@@ -169,7 +155,6 @@ input[type="range"]::-webkit-slider-runnable-track {
   );
   box-shadow: inset 0 1px 2px rgba(0,0,0,0.08);
 }
-
 
 input[type="range"]::-moz-range-track {
   height: 9px;
@@ -182,8 +167,6 @@ input[type="range"]::-moz-range-track {
   );
 }
 
-
-/* THUMB */
 input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
   width: 14px;
@@ -202,7 +185,6 @@ input[type="range"]::-moz-range-thumb {
   border: none;
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
-
 
 input[type="range"]:hover::-webkit-slider-thumb,
 input[type="range"]:focus::-webkit-slider-thumb {
@@ -259,16 +241,16 @@ input[type="range"]:hover::-webkit-slider-runnable-track {
 }
 
 .back-btn {
-  position: fixed;          /* ลอยบนจอ */
-  top: 10px;                /* ห่างจากด้านบน */
-  left: 20px;               /* ห่างจากด้านซ้าย */
+  position: fixed;
+  top: 10px;
+  left: 20px;
   padding: 10px 16px;
   background-color: #000;
   color: #fff;
-  text-decoration: none;    /* เอาเส้นใต้ลิงก์ออก */
+  text-decoration: none;
   border-radius: 19px;
   font-size: 12px;
-  z-index: 9999;            /* กันโดนของอื่นบัง */
+  z-index: 9999;
   transition: 0.2s;
 }
 

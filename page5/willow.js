@@ -1,4 +1,4 @@
-import { generateOak }                                    from './oakGen.js';
+import { generateWillow }                                 from './willowGen.js';
 import { buildThreeGeometry, buildThreeInstancedFoliage } from './threeAdapter.js';
 
 const container = document.getElementById("viewer");
@@ -23,20 +23,74 @@ renderer.setSize(container.clientWidth, container.clientHeight);
 renderer.shadowMap.enabled = true;
 container.appendChild(renderer.domElement);
 
-
-scene.add(new THREE.AmbientLight(0xffffff, 0.9));
-const dirLight = new THREE.DirectionalLight(0xffffff, 0.6);
+scene.add(new THREE.AmbientLight(0xffffff, 0.92));
+const dirLight = new THREE.DirectionalLight(0xffffff, 0.58);
 dirLight.position.set(5, 15, 5);
 dirLight.castShadow = true;
 scene.add(dirLight);
 
-//  Materials 
-const trunkMat = new THREE.MeshStandardMaterial({ color:0x4a3728, roughness:0.9 });
+// Procedural willow bark 
+function makeWillowBarkTexture() {
+  const c = document.createElement('canvas');
+  c.width = 256; c.height = 1024;
+  const x = c.getContext('2d');
+  const g = x.createLinearGradient(0, 0, c.width, 0);
+  g.addColorStop(0,   '#4a3c28');
+  g.addColorStop(0.5, '#6b5a3e');
+  g.addColorStop(1,   '#4a3c28');
+  x.fillStyle = g;
+  x.fillRect(0, 0, c.width, c.height);
 
-const leafTex = new THREE.TextureLoader().load('pic/leaf-oak.png');
+
+  for (let i = 0; i < 22; i++) {
+    const px  = Math.random() * c.width;
+    const len = 80 + Math.random() * 280;
+    const py  = Math.random() * c.height;
+    x.fillStyle = 'rgba(15,10,4,' + (0.40 + Math.random() * 0.45) + ')';
+    x.fillRect(px, py, 1.2 + Math.random() * 2.5, len);
+  }
+
+  // Horizontal ridges
+  for (let i = 0; i < 35; i++) {
+    const py = Math.random() * c.height;
+    const len = 15 + Math.random() * 60;
+    x.fillStyle = 'rgba(15,10,4,' + (0.18 + Math.random() * 0.22) + ')';
+    x.fillRect(Math.random() * c.width, py, len, 1.5 + Math.random() * 2);
+  }
+
+  // Slight moisture highlight 
+  for (let i = 0; i < 14; i++) {
+    const px = Math.random() * c.width;
+    const py = Math.random() * c.height;
+    const r  = 20 + Math.random() * 45;
+    const rg = x.createRadialGradient(px, py, 0, px, py, r);
+    rg.addColorStop(0, 'rgba(120, 100, 60, ' + (0.06 + Math.random() * 0.08) + ')');
+    rg.addColorStop(1, 'rgba(120, 100, 60, 0)');
+    x.fillStyle = rg;
+    x.fillRect(px-r, py-r, r*2, r*2);
+  }
+
+  const tex = new THREE.CanvasTexture(c);
+  tex.wrapS = THREE.RepeatWrapping;
+  tex.wrapT = THREE.RepeatWrapping;
+  tex.repeat.set(2, 5);
+  return tex;
+}
+
+// Materials 
+const barkTex  = makeWillowBarkTexture();
+const trunkMat = new THREE.MeshStandardMaterial({
+  map: barkTex, color: 0xffffff, roughness: 0.93,
+});
+
+// Willow leaf
+const leafTex = new THREE.TextureLoader().load('pic/willow.png');
 const leafMat = new THREE.MeshStandardMaterial({
-  map:leafTex, transparent:true, alphaTest:0.5,
-  side:THREE.DoubleSide, depthWrite:false,
+  map:         leafTex,
+  transparent: true,
+  alphaTest:   0.15,  
+  side:        THREE.DoubleSide,
+  depthWrite:  false,
 });
 
 let treeGroup = new THREE.Group();
@@ -44,18 +98,19 @@ scene.add(treeGroup);
 
 // Build tree 
 function buildTree(age) {
-  const treeData = generateOak(age, speciesData);
+  const treeData = generateWillow(age, speciesData);
   const group    = new THREE.Group();
 
   const mesh = new THREE.Mesh(buildThreeGeometry(treeData, age), trunkMat);
   mesh.castShadow = mesh.receiveShadow = true;
   group.add(mesh);
 
-  if (treeData.foliage.length > 0)
-    group.add(buildThreeInstancedFoliage(treeData, leafMat, age, AGE_MAX, 1.2, 1.2));
+  if (treeData.foliage.length > 0) {
+    group.add(buildThreeInstancedFoliage(treeData, leafMat, age, AGE_MAX, 0.70, 1.2));
+  }
 
-  group.scale.setScalar(0.4);
-  group.position.y = -12;
+  group.scale.setScalar(0.44);
+  group.position.y = -11;
   return group;
 }
 
@@ -107,23 +162,25 @@ window.addEventListener("resize", () => {
 
 (function animate() { requestAnimationFrame(animate); renderer.render(scene, camera); })();
 
-//  Load data 
-fetch('./oak.json')
+// Load data
+fetch('./willow.json')
   .then(r => r.json())
-  .then(oakData => {
-    speciesData = oakData;
-    trunkMat.color.set(oakData.trunk.barkColor);
+  .then(data => {
+    speciesData = data;
+    trunkMat.color.set(data.trunk.barkColor);
 
-    // display 
-    document.getElementById('tree-name').textContent        = oakData.commonName;
-    document.getElementById('tree-species').textContent     = oakData.species;
+    document.getElementById('tree-name').textContent        = data.commonName;
+    document.getElementById('tree-species').textContent     = data.species;
     document.getElementById('tree-environment').innerHTML   =
-      'Temperate broadleaf forests<br>Europe and Western Asia';
+      'Riverbanks &amp; wetlands<br>China, widely cultivated worldwide';
     document.getElementById('tree-description').textContent =
-      'One of the longest-living trees in Europe, the English Oak can survive for over 500 years. ' +
-      'It supports more life forms than any other native tree species.';
+      'The Weeping Willow is one of the most recognisable trees in the world, ' +
+      'known for its long, cascading branches that sweep gracefully toward the ground. ' +
+      'It thrives near water and grows rapidly, often reaching full height within 30 years. ' +
+      'Its narrow leaves shimmer in the slightest breeze, giving it an unmistakable, ' +
+      'melancholic beauty.';
 
-    AGE_MIN=oakData.age.min; AGE_MAX=oakData.age.max; AGE_UNIT=oakData.age.unit;
+    AGE_MIN=data.age.min; AGE_MAX=data.age.max; AGE_UNIT=data.age.unit;
     slider.min=AGE_MIN; slider.max=AGE_MAX; slider.value=AGE_MIN;
     label.textContent = `${AGE_MIN} ${AGE_UNIT}`;
 
@@ -134,4 +191,4 @@ fetch('./oak.json')
     }));
     setStage(0);
   })
-  .catch(err => console.error('Failed to load oak.json:', err));
+  .catch(err => console.error('Failed to load willow.json:', err));

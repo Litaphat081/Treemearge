@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Scots Pine — Jardin du Temps</title>
+  <title>Silver Birch — Jardin du Temps</title>
 
   <link rel="stylesheet" href="style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,8 +11,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Aboreto&display=swap" rel="stylesheet">
 
   <style>
-  
-  /* Layout */
+
+
   .oak-layout   { min-height: 100vh; }
   .scroll-space { display: none; }
   .age-control  { display: none; }
@@ -21,7 +21,7 @@
   /* Viewer fills the viewport */
   .viewer-block {
     width: 100%;
-    height: 100vh !important;        /* override style.css 700px */
+    height: 100vh !important;
     position: sticky;
     top: 0;
     display: flex;
@@ -31,7 +31,7 @@
   }
   #viewer {
     width: 100%;
-    height: 100vh;                   /* explicit height for renderer */
+    height: 100vh;
     position: relative;
   }
 
@@ -66,7 +66,7 @@
     border-radius: 20px !important;
     padding: 8px 18px !important;
     font-size: 12px !important;
-    letter-spacing: 0.04em !important;
+    letter-spacing: .04em !important;
     text-decoration: none !important;
     font-family: 'Aboreto', serif !important;
     transition: background-color .2s, transform .2s !important;
@@ -108,12 +108,13 @@
   }
   .stab:hover  { background: rgba(137,144,100,.13); opacity: 1; }
   .stab.active { border-color: #899064; background: rgba(137,144,100,.2); opacity: 1; font-weight: 500; }
-  .stab[data-s="spring"]        { color: #4a7a38; }
-  .stab[data-s="spring"].active { background: rgba(100,180,80,.17);  border-color: #6ab450; }
+  .stab[data-s="spring"]        { color: #5a8a40; }
+  .stab[data-s="spring"].active { background: rgba(120,190,80,.17); border-color: #72b452; }
   .stab[data-s="summer"]        { color: #2e6e20; }
-  .stab[data-s="summer"].active { background: rgba(60,120,40,.17);   border-color: #3e8828; }
-  .stab[data-s="autumn"]        { color: #a05c18; }
-  .stab[data-s="autumn"].active { background: rgba(180,100,30,.17);  border-color: #c07028; }
+  .stab[data-s="summer"].active { background: rgba(60,120,40,.17); border-color: #3e8828; }
+  /* Birch autumn */
+  .stab[data-s="autumn"]        { color: #b07010; }
+  .stab[data-s="autumn"].active { background: rgba(220,160,20,.20); border-color: #d4a018; }
   .stab[data-s="winter"]        { color: #6a7880; }
   .stab[data-s="winter"].active { background: rgba(100,120,130,.17); border-color: #7a9098; }
 
@@ -152,6 +153,8 @@
   </header>
 
   <div class="oak-layout">
+
+
     <aside class="info left">
 
       <div class="g-section" style="margin-top:0">
@@ -172,7 +175,7 @@
       <div class="g-section">
         <h3>Seed</h3>
         <div class="seed-row">
-          <input type="number" id="seedInput" min="1" max="999999" value="55577" />
+          <input type="number" id="seedInput" min="1" max="999999" value="73531" />
           <button class="seed-btn" id="btnRandom">⟳ New</button>
         </div>
       </div>
@@ -180,8 +183,8 @@
       <div class="g-section">
         <h3>Trunk</h3>
         <div class="gctrl">
-          <div class="gctrl-head"><label>Height at maturity</label><span class="val" id="v-height">35 m</span></div>
-          <input type="range" id="sl-height" min="10" max="50" value="35" step="1" />
+          <div class="gctrl-head"><label>Height at maturity</label><span class="val" id="v-height">25 m</span></div>
+          <input type="range" id="sl-height" min="8" max="35" value="25" step="0.5" />
         </div>
         <div class="gctrl">
           <div class="gctrl-head"><label>Girth growth (cm/yr)</label><span class="val" id="v-girth">1.2</span></div>
@@ -190,26 +193,28 @@
       </div>
 
       <div class="g-section">
-        <h3>Crown</h3>
+        <h3>Branching</h3>
         <div class="gctrl">
-          <div class="gctrl-head"><label>Crown base</label><span class="val" id="v-crownbase">0.30</span></div>
-          <input type="range" id="sl-crownbase" min="0.1" max="0.75" value="0.3" step="0.01" />
+          <div class="gctrl-head"><label>Branch count</label><span class="val" id="v-branches">9</span></div>
+          <input type="range" id="sl-branches" min="2" max="14" value="9" step="1" />
         </div>
         <div class="gctrl">
-          <div class="gctrl-head"><label>Cone taper</label><span class="val" id="v-taper">1.00×</span></div>
-          <input type="range" id="sl-taper" min="0.2" max="2.5" value="1" step="0.05" />
-        </div>
-        <div class="gctrl">
-          <div class="gctrl-head"><label>Branches per whorl</label><span class="val" id="v-whorl">5</span></div>
-          <input type="range" id="sl-whorl" min="2" max="8" value="5" step="1" />
-        </div>
-        <div class="gctrl">
-          <div class="gctrl-head"><label>Whorl angle offset</label><span class="val" id="v-angle">0°</span></div>
+          <div class="gctrl-head"><label>Spread angle offset</label><span class="val" id="v-angle">0°</span></div>
           <input type="range" id="sl-angle" min="-30" max="30" value="0" step="1" />
+        </div>
+        <div class="gctrl">
+          <div class="gctrl-head"><label>Gnarliness</label><span class="val" id="v-gnarly">1.00×</span></div>
+          <input type="range" id="sl-gnarly" min="0.1" max="4" value="1" step="0.05" />
+        </div>
+        <!-- ★ Birch signature: droop/weeping slider -->
+        <div class="gctrl">
+          <div class="gctrl-head"><label>Droop (weeping)</label><span class="val" id="v-droop">1.00×</span></div>
+          <input type="range" id="sl-droop" min="0" max="3" value="1" step="0.05" />
         </div>
       </div>
 
     </aside>
+
 
     <main class="center">
       <div class="viewer-block">
@@ -229,10 +234,10 @@
 
       <div class="g-section" style="margin-top:0">
         <h3>Tree stats</h3>
-        <div class="stat"><span>Height</span>     <strong id="stat-height">—</strong></div>
-        <div class="stat"><span>Girth</span>      <strong id="stat-girth">—</strong></div>
-        <div class="stat"><span>Whorls</span>     <strong id="stat-whorls">—</strong></div>
-        <div class="stat"><span>Needle pts</span> <strong id="stat-needles">—</strong></div>
+        <div class="stat"><span>Height</span>      <strong id="stat-height">—</strong></div>
+        <div class="stat"><span>Girth</span>       <strong id="stat-girth">—</strong></div>
+        <div class="stat"><span>Branch depth</span><strong id="stat-depth">—</strong></div>
+        <div class="stat"><span>Leaf pts</span>    <strong id="stat-leaves">—</strong></div>
       </div>
 
       <div class="g-section">
@@ -240,36 +245,29 @@
         <div class="season-tabs">
           <button class="stab" data-s="spring">Spring</button>
           <button class="stab active" data-s="summer">Summer</button>
+          <!-- Autumn tab subtly highlighted — birch's most iconic season -->
           <button class="stab" data-s="autumn">Autumn</button>
           <button class="stab" data-s="winter">Winter</button>
         </div>
       </div>
 
       <div class="g-section">
-        <h3>Needles</h3>
+        <h3>Leaves</h3>
         <div class="gctrl">
           <div class="gctrl-head"><label>Density</label><span class="val" id="v-density">1.00×</span></div>
           <input type="range" id="sl-density" min="0.1" max="3" value="1" step="0.05" />
         </div>
         <div class="gctrl">
-          <div class="gctrl-head"><label>Cluster size</label><span class="val" id="v-needlesize">0.90</span></div>
-          <input type="range" id="sl-needlesize" min="0.2" max="2.5" value="0.9" step="0.05" />
+          <div class="gctrl-head"><label>Leaf size</label><span class="val" id="v-leafsize">1.00</span></div>
+          <input type="range" id="sl-leafsize" min="0.3" max="2.5" value="1" step="0.05" />
         </div>
       </div>
 
       <div class="g-section">
         <h3>Environment</h3>
         <div class="gctrl">
-          <div class="gctrl-head"><label>Gnarliness</label><span class="val" id="v-gnarly">1.00×</span></div>
-          <input type="range" id="sl-gnarly" min="0.1" max="4" value="1" step="0.05" />
-        </div>
-        <div class="gctrl">
-          <div class="gctrl-head"><label>Gravity</label><span class="val" id="v-gravity">1.00×</span></div>
-          <input type="range" id="sl-gravity" min="0" max="3.5" value="1" step="0.05" />
-        </div>
-        <div class="gctrl">
-          <div class="gctrl-head"><label>Wind</label><span class="val" id="v-wind">0.25</span></div>
-          <input type="range" id="sl-wind" min="0" max="1" value="0.25" step="0.02" />
+          <div class="gctrl-head"><label>Wind</label><span class="val" id="v-wind">0.30</span></div>
+          <input type="range" id="sl-wind" min="0" max="1" value="0.3" step="0.02" />
         </div>
       </div>
 
@@ -291,38 +289,9 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
   <script type="module">
-    import { generatePine }                               from './pineGen.js';
-    import { buildThreeGeometry, buildThreeInstancedFoliage } from './threeAdapter.js';
-
-   
-    //  animateWind 
-
-    function animateWind(instMesh, windTime, windStr) {
-      if (!instMesh || !instMesh.userData.windPhases) return;
-      const THREE  = window.THREE;
-      const phases = instMesh.userData.windPhases;
-      const amps   = instMesh.userData.windAmps;
-      const base   = instMesh.userData.basePos;
-      if (!phases || !amps || !base) return;
-      const count  = instMesh.count ?? instMesh.instanceMatrix.count;
-      const dummy  = new THREE.Object3D();
-      const m4     = new THREE.Matrix4();
-      for (let i = 0; i < count; i++) {
-        instMesh.getMatrixAt(i, m4);
-        dummy.matrixAutoUpdate = false;
-        dummy.matrix.copy(m4);
-        dummy.matrix.decompose(dummy.position, dummy.quaternion, dummy.scale);
-        const ph  = phases[i];
-        const amp = amps[i] * windStr;
-        dummy.position.x = base[i*3]     + Math.sin(windTime * 1.1 + ph) * amp;
-        dummy.position.y = base[i*3 + 1] + Math.sin(windTime * 0.8 + ph * 1.3) * amp * 0.3;
-        dummy.position.z = base[i*3 + 2] + Math.cos(windTime * 0.9 + ph * 0.7) * amp * 0.6;
-        dummy.matrixAutoUpdate = true;
-        dummy.updateMatrix();
-        instMesh.setMatrixAt(i, dummy.matrix);
-      }
-      instMesh.instanceMatrix.needsUpdate = true;
-    }
+    import { generateBirch }                                       from './birchGen.js';
+    import { buildThreeGeometry, buildThreeInstancedFoliage,
+             animateWind }                                         from './threeAdapter.js';
 
 
     const THREE     = window.THREE;
@@ -331,20 +300,19 @@
     const loaderMsg = document.getElementById('loaderMsg');
 
     let speciesData = null;
-    let FIXED_AGE   = 300;
+    let FIXED_AGE   = 90;      
     let treeGroup   = new THREE.Group();
     let foliageMesh = null;
     let windTime    = 0;
     let autoRotate  = true;
 
-
-    //  SEASONS 
     
+    //  SEASONS
     const SEASONS = {
-      spring: { needleColor: 0x78c850, ground: 0x8aaa6a, fogColor: 0xd8ead8 },
-      summer: { needleColor: 0xffffff, ground: 0x7a9458, fogColor: 0xcedcd0 }, 
-      autumn: { needleColor: 0xa0a840, ground: 0x907a52, fogColor: 0xe0d4b8 },
-      winter: { needleColor: 0x284838, ground: 0xa0a8a0, fogColor: 0xd8dce8 },
+      spring: { leafTint: 0xa8d870, leafOpacity: 0.85, ground: 0x92a86a, fogColor: 0xd8ead8 },
+      summer: { leafTint: 0xffffff, leafOpacity: 1.00, ground: 0x82985a, fogColor: 0xd0ddd0 },
+      autumn: { leafTint: 0xe8c020, leafOpacity: 0.90, ground: 0x9a8050, fogColor: 0xe0d4a8 },  // ★ golden
+      winter: { leafTint: 0xffffff, leafOpacity: 0.00, ground: 0xa8a8a0, fogColor: 0xd8dce8 },  // bare
     };
     let currentSeason = 'summer';
 
@@ -352,16 +320,15 @@
       const S = SEASONS[s];
       scene.fog.color.set(S.fogColor);
       ground.material.color.set(S.ground);
-      needleMat.color.set(S.needleColor);
-      needleMat.needsUpdate = true;
     }
 
-    //  SCENE  
+
+    //  SCENE — transparent canvas
 
     const scene = new THREE.Scene();
-    scene.fog   = new THREE.FogExp2(0xcedcd0, 0.008);
+    scene.fog   = new THREE.FogExp2(0xd0ddd0, 0.009);
 
-    const camera   = new THREE.PerspectiveCamera(48, 1, 0.1, 300);
+    const camera   = new THREE.PerspectiveCamera(50, 1, 0.1, 300);
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setClearColor(0x000000, 0);
     renderer.shadowMap.enabled = true;
@@ -369,22 +336,22 @@
     renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
     container.appendChild(renderer.domElement);
 
-    // Lights
-    scene.add(new THREE.HemisphereLight(0xd0e8d0, 0x806040, 1.1));
-    const sun = new THREE.DirectionalLight(0xfff8e8, 1.3);
-    sun.position.set(10, 22, 8);
+    // Lights 
+    scene.add(new THREE.HemisphereLight(0xe8f0e8, 0x908060, 1.15));
+    const sun = new THREE.DirectionalLight(0xfff8f0, 1.2);
+    sun.position.set(8, 20, 8);
     sun.castShadow = true;
-    Object.assign(sun.shadow.camera, { left:-30, right:30, bottom:-14, top:30, far:120 });
+    Object.assign(sun.shadow.camera, { left:-22, right:22, bottom:-12, top:22, far:100 });
     sun.shadow.mapSize.set(1024, 1024);
     scene.add(sun);
-    const fill = new THREE.DirectionalLight(0xa8c8e0, 0.35);
-    fill.position.set(-8, 10, -12);
+    const fill = new THREE.DirectionalLight(0xd0e8f8, 0.4);
+    fill.position.set(-6, 8, -10);
     scene.add(fill);
 
     // Ground
     const ground = new THREE.Mesh(
       new THREE.CircleGeometry(90, 48),
-      new THREE.MeshLambertMaterial({ color: 0x7a9458 })
+      new THREE.MeshLambertMaterial({ color: 0x82985a })
     );
     ground.rotation.x = -Math.PI / 2;
     ground.receiveShadow = true;
@@ -392,39 +359,47 @@
 
     scene.add(treeGroup);
 
-    // Procedural bark texture 
-    function makePineBarkTexture() {
+    // Procedural birch bark 
+    function makeBirchBarkTexture() {
       const cv = document.createElement('canvas');
       cv.width = 256; cv.height = 1024;
       const ctx = cv.getContext('2d');
-      const g = ctx.createLinearGradient(0, 0, 0, cv.height);
-      g.addColorStop(0,    '#b05520');
-      g.addColorStop(0.40, '#8a4f28');
-      g.addColorStop(1,    '#4a3018');
+
+      const g = ctx.createLinearGradient(0, 0, cv.width, 0);
+      g.addColorStop(0,   '#d6cdb6'); g.addColorStop(0.5, '#f1ead7'); g.addColorStop(1, '#d6cdb6');
       ctx.fillStyle = g; ctx.fillRect(0, 0, cv.width, cv.height);
-      for (let i = 0; i < 60; i++) {
-        ctx.fillStyle = `rgba(20,10,4,${0.20 + Math.random() * 0.30})`;
-        ctx.fillRect(Math.random()*cv.width, Math.random()*cv.height,
-                     14 + Math.random()*48, 5 + Math.random()*12);
+
+      for (let i = 0; i < 28; i++) {
+        const px = Math.random()*cv.width, py = Math.random()*cv.height, r = 25+Math.random()*55;
+        const rg = ctx.createRadialGradient(px,py,0,px,py,r);
+        rg.addColorStop(0, `rgba(176,138,90,${0.06+Math.random()*0.08})`);
+        rg.addColorStop(1, 'rgba(176,138,90,0)');
+        ctx.fillStyle = rg; ctx.fillRect(px-r,py-r,r*2,r*2);
+      }
+      for (let i = 0; i < 18; i++) {
+        ctx.fillStyle = `rgba(72,54,36,${0.18+Math.random()*0.22})`;
+        ctx.fillRect(Math.random()*cv.width, Math.random()*cv.height, 20+Math.random()*35, 4+Math.random()*8);
+      }
+    
+      for (let i = 0; i < 480; i++) {
+        ctx.fillStyle = `rgba(18,12,8,${0.55+Math.random()*0.42})`;
+        ctx.fillRect(Math.random()*cv.width, Math.random()*cv.height, 8+Math.random()*42, 1+Math.random()*2.3);
       }
       const tex = new THREE.CanvasTexture(cv);
       tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
-      tex.repeat.set(1.5, 4);
+      tex.repeat.set(1.5, 3);
       return tex;
     }
 
-    const trunkMat = new THREE.MeshStandardMaterial({
-      map: makePineBarkTexture(), color: 0xffffff, roughness: 0.95,
-    });
-    const needleTex = new THREE.TextureLoader().load('pic/pine.png');
-    const needleMat = new THREE.MeshLambertMaterial({
-      map: needleTex, color: 0x3d6845,   
-      transparent: true, alphaTest: 0.30,
+    const trunkMat = new THREE.MeshStandardMaterial({ map: makeBirchBarkTexture(), color: 0xffffff, roughness: 0.85 });
+    const leafTex  = new THREE.TextureLoader().load('pic/birch.png');
+    const leafMat  = new THREE.MeshStandardMaterial({
+      map: leafTex, transparent: true, alphaTest: 0.5,
       side: THREE.DoubleSide, depthWrite: false,
     });
 
-
-    const orbit = { theta: 0.25, phi: 1.28, r: 32, tx: 0, ty: -5 };
+    
+    const orbit = { theta: 0.25, phi: 1.25, r: 28, tx: 0, ty: -5 };
     let isDragging = false, lastMouse = { x:0, y:0 };
 
     function updateCamera() {
@@ -455,7 +430,7 @@
       updateCamera();
     });
     cvs.addEventListener('wheel', e => {
-      orbit.r = Math.max(6, Math.min(100, orbit.r + e.deltaY * 0.06));
+      orbit.r = Math.max(6, Math.min(90, orbit.r + e.deltaY * 0.06));
       updateCamera(); e.preventDefault();
     }, { passive: false });
     cvs.addEventListener('touchstart', e => {
@@ -466,7 +441,7 @@
     cvs.addEventListener('touchmove', e => {
       if (!isDragging) return;
       orbit.theta -= (e.touches[0].clientX - lastMouse.x) * 0.007;
-      orbit.phi = Math.max(0.10, Math.min(Math.PI * 0.46, orbit.phi + (e.touches[0].clientY - lastMouse.y) * 0.006));
+      orbit.phi = Math.max(0.10, Math.min(Math.PI*0.46, orbit.phi + (e.touches[0].clientY-lastMouse.y)*0.006));
       lastMouse = { x: e.touches[0].clientX, y: e.touches[0].clientY };
       updateCamera();
     }, { passive: true });
@@ -475,7 +450,7 @@
 
     function onResize() {
       const w = container.clientWidth, h = container.clientHeight;
-      if (w === 0 || h === 0) return;
+      if (!w || !h) return;
       renderer.setSize(w, h);
       camera.aspect = w / h;
       camera.updateProjectionMatrix();
@@ -483,7 +458,7 @@
     new ResizeObserver(onResize).observe(container);
     onResize();
 
-  
+
     const n   = id => Number(document.getElementById(id).value);
     const $id = id => document.getElementById(id);
 
@@ -492,84 +467,65 @@
       spec.seed                          = n('seedInput');
       spec.trunk.heightAtMaturity_m      = n('sl-height');
       spec.trunk.girthGrowth_cm_per_year = n('sl-girth');
-      spec.branching.primaryBranchCount  = n('sl-whorl');
+      spec._branchCount                  = n('sl-branches');
       spec._branchAngleOffset            = n('sl-angle');
       spec._gnarlinessMult               = n('sl-gnarly');
-      spec._gravityMult                  = n('sl-gravity');
-      spec._crownBase                    = n('sl-crownbase');
-      spec._coneTaper                    = n('sl-taper');
+      spec._droopMult                    = n('sl-droop');    // ★ birch-specific
       spec._foliageDensity               = n('sl-density');
       return spec;
     }
 
-
+    
     function buildTree() {
       const age      = FIXED_AGE;
       const spec     = buildSpec(speciesData);
+      const treeData = generateBirch(age, spec);
+      const S        = SEASONS[currentSeason];
 
     
-      applySeasonEnv(currentSeason);
-
-      const treeData = generatePine(age, spec);
+      treeData.densityMult       = n('sl-density');
+      treeData.leafOpacity       = S.leafOpacity;
+      treeData.leafTint          = S.leafTint;
+      treeData.leafScaleOverride = n('sl-leafsize');
 
       const group = new THREE.Group();
 
-      trunkMat.color.set(speciesData.trunk.barkColor);
       const mesh = new THREE.Mesh(buildThreeGeometry(treeData, age), trunkMat);
       mesh.castShadow = mesh.receiveShadow = true;
       group.add(mesh);
 
       foliageMesh = null;
-      if (treeData.foliage.length > 0) {
-        const ns = n('sl-needlesize');
-        const fm = buildThreeInstancedFoliage(treeData, needleMat, age, age, ns, ns * 1.05);
-
-        const count = fm.count ?? fm.instanceMatrix.count ?? 0;
-        fm.userData.windPhases = new Float32Array(count);
-        fm.userData.windAmps   = new Float32Array(count);
-        fm.userData.basePos    = new Float32Array(count * 3);
-        let s = 3131;
-        const rr = () => (s = s * 16807 % 2147483647) / 2147483647;
-        const dummy = new THREE.Object3D();
-        const m4    = new THREE.Matrix4();
-        for (let i = 0; i < count; i++) {
-          fm.getMatrixAt(i, m4);
-          dummy.matrixAutoUpdate = false;
-          dummy.matrix.copy(m4);
-          dummy.matrix.decompose(dummy.position, dummy.quaternion, dummy.scale);
-          fm.userData.windPhases[i]      = rr() * Math.PI * 2;
-          fm.userData.windAmps[i]        = 0.05 + rr() * 0.08;
-          fm.userData.basePos[i * 3]     = dummy.position.x;
-          fm.userData.basePos[i * 3 + 1] = dummy.position.y;
-          fm.userData.basePos[i * 3 + 2] = dummy.position.z;
-        }
-        fm.count   = count;
+      if (treeData.foliage.length > 0 && S.leafOpacity > 0.01) {
+        const fm = buildThreeInstancedFoliage(treeData, leafMat, age, age);
         group.add(fm);
         foliageMesh = fm;
       }
 
-      group.scale.setScalar(0.40);
+      // Birch scale 
+      group.scale.setScalar(0.55);
       group.position.y = -12;
 
-      // Camera tracks 
-      const gf  = Math.min(age / 500, 1);
-      const h   = spec.trunk.heightAtMaturity_m * Math.pow(gf, 0.72);
-      orbit.ty  = -12 + h * 0.4 * 0.50;
+      // Camera 
+      const gf  = Math.min(age / speciesData.age.max, 1);
+      const hF  = 1 - Math.pow(1 - gf, 1.8);
+      const h   = spec.trunk.heightAtMaturity_m * hF;
+      orbit.ty  = -12 + h * 0.55 * 0.5;
       updateCamera();
 
       // Stats
-      const whorls = Math.max(3, Math.min(26, Math.round(h * 1.4)));
-      const circ   = (spec.trunk.girthGrowth_cm_per_year * age / 100).toFixed(2);
+      const circ = (spec.trunk.girthGrowth_cm_per_year * age / 100).toFixed(2);
+      const maxD = age < 10 ? 1 : age < 35 ? 2 : 3;
       $id('stat-height').textContent  = `${h.toFixed(1)} m`;
       $id('stat-girth').textContent   = `${circ} m`;
-      $id('stat-whorls').textContent  = whorls;
-      $id('stat-needles').textContent = treeData.foliage.length.toLocaleString();
+      $id('stat-depth').textContent   = `level ${maxD}`;
+      $id('stat-leaves').textContent  = treeData.foliage.length.toLocaleString();
 
       return group;
     }
 
     
-    //  UPDATE (dispose → build → swap)
+    //  UPDATE
+
     let pending = false;
 
     function updateTree() {
@@ -586,7 +542,7 @@
           treeGroup = buildTree();
           scene.add(treeGroup);
         } catch (err) {
-          console.error('[pine.html] buildTree error:', err);
+          console.error('[birch.html] buildTree error:', err);
           loaderMsg.textContent = 'Error: ' + err.message;
           pending = false;
           return;
@@ -598,21 +554,19 @@
 
     window.addEventListener('resize', onResize);
 
-
+    
     //  CONTROL WIRING
 
     const CTRLS = [
-      { id: 'sl-height',     vid: 'v-height',     fmt: v => `${v} m`,                       live: false },
-      { id: 'sl-girth',      vid: 'v-girth',      fmt: v => parseFloat(v).toFixed(1),        live: false },
-      { id: 'sl-crownbase',  vid: 'v-crownbase',  fmt: v => parseFloat(v).toFixed(2),        live: false },
-      { id: 'sl-taper',      vid: 'v-taper',      fmt: v => `${parseFloat(v).toFixed(2)}×`,  live: false },
-      { id: 'sl-whorl',      vid: 'v-whorl',      fmt: v => v,                               live: false },
-      { id: 'sl-angle',      vid: 'v-angle',      fmt: v => `${v}°`,                         live: false },
-      { id: 'sl-gnarly',     vid: 'v-gnarly',     fmt: v => `${parseFloat(v).toFixed(2)}×`,  live: false },
-      { id: 'sl-gravity',    vid: 'v-gravity',    fmt: v => `${parseFloat(v).toFixed(2)}×`,  live: false },
-      { id: 'sl-wind',       vid: 'v-wind',       fmt: v => parseFloat(v).toFixed(2),         live: true  },
-      { id: 'sl-density',    vid: 'v-density',    fmt: v => `${parseFloat(v).toFixed(2)}×`,  live: false },
-      { id: 'sl-needlesize', vid: 'v-needlesize', fmt: v => parseFloat(v).toFixed(2),         live: false },
+      { id: 'sl-height',   vid: 'v-height',   fmt: v => `${parseFloat(v).toFixed(1)} m`,  live: false },
+      { id: 'sl-girth',    vid: 'v-girth',    fmt: v => parseFloat(v).toFixed(1),          live: false },
+      { id: 'sl-branches', vid: 'v-branches', fmt: v => v,                                 live: false },
+      { id: 'sl-angle',    vid: 'v-angle',    fmt: v => `${v}°`,                           live: false },
+      { id: 'sl-gnarly',   vid: 'v-gnarly',   fmt: v => `${parseFloat(v).toFixed(2)}×`,    live: false },
+      { id: 'sl-droop',    vid: 'v-droop',    fmt: v => `${parseFloat(v).toFixed(2)}×`,    live: false },
+      { id: 'sl-density',  vid: 'v-density',  fmt: v => `${parseFloat(v).toFixed(2)}×`,    live: false },
+      { id: 'sl-leafsize', vid: 'v-leafsize', fmt: v => parseFloat(v).toFixed(2),           live: false },
+      { id: 'sl-wind',     vid: 'v-wind',     fmt: v => parseFloat(v).toFixed(2),           live: true  },
     ];
 
     CTRLS.forEach(({ id, vid, fmt, live }) => {
@@ -632,6 +586,7 @@
         btn.classList.add('active');
         currentSeason = btn.dataset.s;
         applySeasonEnv(currentSeason);
+        if (speciesData) updateTree();   // rebuild for leaf opacity change
       });
     });
 
@@ -648,7 +603,7 @@
 
   
     //  RENDER LOOP
-
+    
     let lastTs = 0;
     (function animate(ts) {
       requestAnimationFrame(animate);
@@ -667,36 +622,37 @@
     })(0);
 
   
-    //  LOAD pine.json
-  
-    fetch('./pine.json')
+    //  LOAD birch.json
+
+    fetch('./birch.json')
       .then(r => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); })
       .then(data => {
         speciesData = data;
 
-        FIXED_AGE = Math.round(data.age.max * 0.6);   // 300 — mature pine
+        FIXED_AGE = Math.round(data.age.max * 0.6);   // 90 years — mature birch
 
         $id('tree-name').textContent      = data.commonName;
         $id('tree-species').textContent   = data.species;
-        $id('tree-environment').innerHTML = 'Boreal &amp; temperate forests<br>Europe &amp; Northern Asia';
+        $id('tree-environment').innerHTML = 'Temperate &amp; boreal forests<br>Europe, Siberia, Asia Minor';
         $id('tree-description').textContent =
-          'One of the most widely distributed conifers in the world, the Scots Pine is ' +
-          'recognised by its distinctive orange-red bark on the upper trunk. ' +
-          'It can live for over 700 years and provides vital habitat for many woodland species.';
+          'A graceful pioneer species recognised by its white papery bark and horizontal ' +
+          'black lenticels. Silver birch lives up to 150 years and is often the first tree ' +
+          'to colonise disturbed ground — its leaves prepare the soil for slower-growing forests.';
 
-        $id('sl-height').value = data.trunk.heightAtMaturity_m;
-        $id('sl-girth').value  = data.trunk.girthGrowth_cm_per_year;
-        $id('sl-whorl').value  = data.branching.primaryBranchCount;
-        $id('v-height').textContent = `${data.trunk.heightAtMaturity_m} m`;
-        $id('v-girth').textContent  = parseFloat(data.trunk.girthGrowth_cm_per_year).toFixed(1);
-        $id('v-whorl').textContent  = data.branching.primaryBranchCount;
+        // Sync sliders from json
+        $id('sl-height').value   = data.trunk.heightAtMaturity_m;
+        $id('sl-girth').value    = data.trunk.girthGrowth_cm_per_year;
+        $id('sl-branches').value = data.branching.primaryBranchCount;
+        $id('v-height').textContent   = `${parseFloat(data.trunk.heightAtMaturity_m).toFixed(1)} m`;
+        $id('v-girth').textContent    = parseFloat(data.trunk.girthGrowth_cm_per_year).toFixed(1);
+        $id('v-branches').textContent = data.branching.primaryBranchCount;
 
         applySeasonEnv(currentSeason);
         updateTree();
       })
       .catch(err => {
-        console.error('[pine.html] Failed to load pine.json:', err);
-        loaderMsg.textContent = 'Failed to load pine.json';
+        console.error('[birch.html] Failed to load birch.json:', err);
+        loaderMsg.textContent = 'Failed to load birch.json';
       });
   </script>
 

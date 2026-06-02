@@ -1,0 +1,54 @@
+{
+  "species": "Betula pendula",
+  "commonName": "Silver Birch",
+
+  "seed": 73531,
+
+  "age": {
+    "min": 1,
+    "max": 150,
+    "unit": "year"
+  },
+
+  "trunk": {
+    "heightAtMaturity_m": 25,
+    "heightGrowth_m_per_year": 0.55,
+    "maxGirthCircumference_m": 2.5,
+    "girthGrowth_cm_per_year": 1.2,
+    "barkColor": "#ede5d2"
+  },
+
+  "branch": {
+    "primaryAngle_deg": 42,
+    "secondaryAngle_deg": 35,
+    "segmentLength_m": 1.8,
+    "taperRatio": 0.72
+  },
+
+  "crown": {
+    "baseHeightRatio": 0.45,
+    "radiusAtMaturity_m": 6
+  },
+
+  "branching": {
+    "primaryBranchCount": 5,
+    "spiralAngle_deg": 137.5,
+    "gravityAngle_deg": 22
+  },
+
+  "growth": {
+    "maxDepthByAge": {
+      "1": 0,
+      "3": 1,
+      "10": 2,
+      "25": 3,
+      "60": 4,
+      "100": 5,
+      "150": 5
+    }
+  },
+
+  "scale": {
+    "metersPerUnit": 1
+  }
+}

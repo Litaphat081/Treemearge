@@ -1,9 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Aboreto&family=Leckerli+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Aboreto&family=Leckerli+One&family=Cormorant+Garamond:ital,wght@0,300;1,300;1,400&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-  margin: 0;
   font-family: 'Aboreto', serif;
-  background: #efe6d6;
+  background: #c8d8e8;   /* matches winter sky — no beige bleed-through */
   overflow-x: hidden;
 }
 
@@ -16,127 +17,255 @@ body {
   text-align: center;
   position: sticky;
   top: 0;
-  z-index: 100;
+  z-index: 200;
 }
 
 /* PARALLAX SCENE */
 .parallax-scene {
   position: relative;
-  height: 500vh;   /* ⭐ เพิ่มเพื่อให้ 4 ฤดูไหลลื่น */
-  overflow: hidden;
+  height: 500vh;
 }
 
-
-/* LAYER BASE */
-.layer {
+/* SEASON BACKGROUNDS */
+.scene-bg {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  pointer-events: none;
-  will-change: transform;
+  inset: 0;
+  top: 60px;           
+  background-size: cover;
+  background-position: center bottom;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  z-index: 1;
+  /* subtle scale parallax handled by JS */
+  transform-origin: center bottom;
+  will-change: opacity, transform;
 }
 
-.layer img {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
+/* spring visible by default */
+#bg-spring { opacity: 1; }
 
-.layer-grass {
+/* SEASON CAPTIONS */
+.season-caption {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.7s ease;
   z-index: 20;
+  pointer-events: none;
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(1.1rem, 2vw, 1.55rem);
+  line-height: 1.75;
+  letter-spacing: 0.04em;
+  color: #fff;
+  /* Strong multi-layer shadow so text reads on any season bg */
+  text-shadow:
+    0 0 30px rgba(0,0,0,0.55),
+    0 2px 8px  rgba(0,0,0,0.70),
+    0 0 3px    rgba(0,0,0,0.90);
+  /* Subtle dark pill behind text for extra legibility */
+  background: rgba(0,0,0,0.18);
+  padding: 0.7em 1.6em;
+  border-radius: 40px;
+  backdrop-filter: blur(1px);
 }
 
-.layer-grass .grass {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 220px;              /* ⭐ ปรับความสูง grass */
-  opacity: 0;
-  transition: opacity 0.35s linear;
+#cap-spring { opacity: 1; }
 
-  background-repeat: repeat-x;      /* ⭐ ต่อกันซ้ายขวา */
-  background-position: bottom;
-  background-size: auto 100%;       /* ให้สูงเต็ม div */
-}
-
-
-/* SEASONS */
-.season {
-  opacity: 0;
-  transition: opacity 0.35s linear;
-}
-
-/* Z-INDEX */
-.layer-sky { z-index: 10; }
-.layer-cloud { z-index: 15; }
-.layer-tree { z-index: 20; }
-.layer-grass { z-index: 30; }
-
-
-/* TEXT */
+/* INTRO TEXT */
 .scene-content {
-  position: relative;
-  z-index: 50;
+  position: fixed;
+  bottom: 4vh;
+  left: 0;
+  right: 0;
+  z-index: 30;
   display: flex;
   justify-content: space-between;
-  padding: 5rem;
-  max-width: 1400px;
-  margin: 0 auto;
-  gap: 4rem;
+  align-items: flex-end;
+  padding: 0 5vw 2vh;
+  gap: 4vw;
+  pointer-events: none;
+  /* fades in sync with spring background */
+  opacity: 1;
+  transition: opacity 0.6s ease;
 }
 
+.scene-content.hidden {
+  opacity: 0;
+}
+
+/* LEFT — welcome block */
 .left-block {
-  width: 55%;
-  background: rgba(239, 230, 214, 0.65);
-  padding: 2rem;
-  border-radius: 16px;
-  backdrop-filter: blur(6px);
+  max-width: 420px;
+  /* no background, no border-radius */
 }
 
 .left-block h2 {
-  margin-top: 0;
-  font-size: 28px;
+  font-family: 'Aboreto', serif;
+  font-size: clamp(1rem, 1.6vw, 1.35rem);
+  letter-spacing: 0.12em;
+  color: #fff;
+  text-shadow:
+    0 0 20px rgba(0,0,0,0.70),
+    0 2px 6px  rgba(0,0,0,0.70);
+  margin-bottom: 0.75rem;
+  line-height: 1.35;
 }
 
 .left-block p {
-  margin: 0;
-  line-height: 1.8;
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(0.85rem, 1.2vw, 1.0rem);
+  line-height: 1.75;
+  color: #fff;
+  text-shadow:
+    0 0 16px rgba(0,0,0,0.70),
+    0 1px 4px  rgba(0,0,0,0.65);
+  margin-bottom: 0.3rem;
 }
 
+/* RIGHT — poetic block */
 .right-block {
-  width: 35%;
-  background: rgba(239, 230, 214, 0.55);
-  padding: 2rem;
-  border-radius: 16px;
-  backdrop-filter: blur(6px);
+  max-width: 340px;
+  text-align: right;
 }
 
 .right-block p {
-  margin: 0;
-  line-height: 1.8;
-  letter-spacing: 0.08em;
-  font-size: 13px;
+  font-family: 'Aboreto', serif;
+  font-size: clamp(0.62rem, 0.9vw, 0.78rem);
+  letter-spacing: 0.1em;
+  line-height: 1.85;
+  color: #fff;
+  text-shadow:
+    0 0 18px rgba(0,0,0,0.75),
+    0 1px 4px  rgba(0,0,0,0.65);
 }
 
-/* SCROLL SPACE */
-.scroll-space {
-  position: relative;
-  z-index: 60;
-  min-height: 200vh;
-  padding: 6rem;
-  background: transparent;  /* ⭐ เอาครีมออก */
+/* SOUND BUTTON */
+#soundBtn {
+  position: absolute;
+  top: 50%;
+  left: 1.4rem;
+  transform: translateY(-50%);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.42rem 0.75rem;
+  background: rgba(245, 240, 230, 0.12);
+  border: 1px solid rgba(245, 240, 230, 0.35);
+  border-radius: 24px;
+  color: #f5f0e6;
+  cursor: pointer;
+  transition: background 0.22s, border-color 0.22s, transform 0.18s;
+  user-select: none;
+}
+#soundBtn:hover {
+  background: rgba(245, 240, 230, 0.22);
+  border-color: rgba(245, 240, 230, 0.60);
+  transform: translateY(-50%) scale(1.06);
+}
+#soundBtn.playing {
+  background: rgba(90, 140, 80, 0.30);
+  border-color: rgba(180, 230, 140, 0.55);
+  color: #d8f0b8;
 }
 
-/* ---------------- Sprout Banner (ของเดิมคุณ) ---------------- */
+/* Speaker SVG */
+.speaker-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+/* Muted state: show X, hide waves */
+#soundBtn:not(.playing) .wave-outer,
+#soundBtn:not(.playing) .wave-inner { opacity: 0; }
+#soundBtn:not(.playing) .mute-x1,
+#soundBtn:not(.playing) .mute-x2    { opacity: 1; }
+/* Playing state: hide X, show waves */
+#soundBtn.playing .wave-outer,
+#soundBtn.playing .wave-inner { opacity: 1; }
+#soundBtn.playing .mute-x1,
+#soundBtn.playing .mute-x2   { opacity: 0; }
+
+.wave-outer, .wave-inner, .mute-x1, .mute-x2 {
+  transition: opacity 0.25s ease;
+}
+
+/* Wave bars — only visible while playing */
+.sound-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 13px;
+  overflow: hidden;
+  width: 0;
+  opacity: 0;
+  transition: width 0.25s ease, opacity 0.25s ease;
+}
+#soundBtn.playing .sound-bars {
+  width: 18px;
+  opacity: 1;
+}
+.sound-bars span {
+  display: block;
+  width: 3px;
+  background: currentColor;
+  border-radius: 2px;
+}
+#soundBtn:not(.playing) .sound-bars span { height: 4px; }
+#soundBtn.playing .sound-bars span:nth-child(1) { height: 5px;  animation: bar 1.1s ease-in-out infinite; }
+#soundBtn.playing .sound-bars span:nth-child(2) { height: 10px; animation: bar 0.8s ease-in-out infinite 0.15s; }
+#soundBtn.playing .sound-bars span:nth-child(3) { height: 7px;  animation: bar 1.3s ease-in-out infinite 0.30s; }
+#soundBtn.playing .sound-bars span:nth-child(4) { height: 12px; animation: bar 0.9s ease-in-out infinite 0.05s; }
+
+@keyframes bar {
+  0%,100% { transform: scaleY(0.4); }
+  50%      { transform: scaleY(1.0); }
+}
+.scroll-hint {
+  position: fixed;
+  bottom: 3.5vh;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  opacity: 1;
+  transition: opacity 0.5s;
+}
+
+.scroll-hint.hidden { opacity: 0; pointer-events: none; }
+
+.scroll-hint span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: rgba(255,255,255,0.65);
+  border-radius: 2px;
+  animation: scrollPulse 1.6s ease-in-out infinite;
+}
+.scroll-hint span:nth-child(2) { animation-delay: 0.18s; }
+.scroll-hint span:nth-child(3) { animation-delay: 0.36s; }
+
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.3; transform: scaleX(0.7); }
+  50%       { opacity: 1;   transform: scaleX(1); }
+}
+
+/* SPROUT BANNER */
 .sprout-banner {
   position: absolute;
   top: 0;
   right: 2rem;
-  width: 72px;
+  width: 100px;
   height: 220px;
   transform: translateY(-160px);
   transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -144,9 +273,7 @@ body {
   cursor: pointer;
 }
 
-.sprout-banner:hover {
-  transform: translateY(0);
-}
+.sprout-banner:hover { transform: translateY(0); }
 
 .tree-menu-board {
   position: absolute;
@@ -155,7 +282,7 @@ body {
   right: 5px;
   background: #CFBB9A;
   border-radius: 0 0 36px 36px;
-  padding: 20px 10px 10px 10px;
+  padding: 20px 10px 10px;
   transform: translateY(-100%);
   opacity: 0;
   transition: all 0.5s ease;
@@ -168,11 +295,7 @@ body {
   transition-delay: 0.1s;
 }
 
-.tree-menu-board ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
+.tree-menu-board ul { list-style: none; }
 
 .tree-menu-board li a {
   display: block;
@@ -181,20 +304,15 @@ body {
   text-decoration: none;
   font-size: 14px;
   text-align: center;
+  white-space: nowrap;
   transition: color 0.2s;
 }
 
-.tree-menu-board li a:hover {
-  color: #9aa76d;
-  font-weight: bold;
-}
+.tree-menu-board li a:hover { color: #9aa76d; font-weight: bold; }
 
 .sprout-bg {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   background: #9aa76d;
   border-radius: 0 0 36px 36px;
   z-index: 1;
@@ -227,28 +345,3 @@ body {
   background-color: #efe6d6;
   border-radius: 2px;
 }
-
-/* ⭐ FIX: make winter grass bigger + always visible */
-.layer-grass .season-winter {
-  transform: scale(1.25);       /* เพิ่มขนาด */
-  object-position: bottom;      /* ดันไปล่าง */
-}
-
-/* เผื่อ winter tree ด้วย ให้ดูเต็มขึ้น */
-.layer-tree .season-winter {
-  transform: scale(1.1);
-  object-position: bottom;
-}
-
-/* ⭐ ให้ทุก layer ยึดด้านล่าง */
-.layer-sky img,
-.layer-cloud img,
-.layer-tree img,
-.layer-grass img {
-  object-position: bottom;
-}
-
-.layer-grass .grass {
-  background-position: bottom;
-}
-

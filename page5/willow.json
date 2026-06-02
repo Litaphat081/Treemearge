@@ -1,0 +1,52 @@
+{
+  "species": "Salix babylonica",
+  "commonName": "Weeping Willow",
+
+  "seed": 38291,
+
+  "age": {
+    "min": 1,
+    "max": 120,
+    "unit": "year"
+  },
+
+  "trunk": {
+    "heightAtMaturity_m": 20,
+    "heightGrowth_m_per_year": 0.60,
+    "maxGirthCircumference_m": 4.0,
+    "girthGrowth_cm_per_year": 2.2,
+    "barkColor": "#6b5a3e"
+  },
+
+  "branch": {
+    "primaryAngle_deg": 50,
+    "secondaryAngle_deg": 35,
+    "segmentLength_m": 1.5,
+    "taperRatio": 0.72
+  },
+
+  "crown": {
+    "baseHeightRatio": 0.35,
+    "radiusAtMaturity_m": 10
+  },
+
+  "branching": {
+    "primaryBranchCount": 7,
+    "spiralAngle_deg": 137.5,
+    "gravityAngle_deg": 30
+  },
+
+  "growth": {
+    "maxDepthByAge": {
+      "1":  0,
+      "3":  1,
+      "8":  2,
+      "20": 3,
+      "50": 4
+    }
+  },
+
+  "scale": {
+    "metersPerUnit": 1
+  }
+}

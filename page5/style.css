@@ -54,7 +54,7 @@ body {
   display: block;
 }
 
-/* viewer + slider move together */
+/* viewer + slider */
 .viewer-block {
   width: 100%;
   height: 100vh;
@@ -82,7 +82,7 @@ body {
   height: 500vh;
 }
 
-/* Hide native scrollbar everywhere */
+/* Hide native scrollbar */
 html,
 body,
 .oak-layout,
@@ -133,7 +133,7 @@ body::-webkit-scrollbar,
   background: #364025;
 }
 
-/* ===== Custom Slider Style ===== */
+/* Custom Slider Style */
 
 input[type="range"] {
   -webkit-appearance: none;

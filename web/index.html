@@ -4,10 +4,28 @@
   <meta charset="UTF-8" />
   <title>Jardin du Temps</title>
   <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Aboreto&family=Leckerli+One&family=Cormorant+Garamond:ital,wght@0,300;1,300;1,400&display=swap" rel="stylesheet">
 </head>
 <body>
 
 <header class="top-header">
+  
+  <button id="soundBtn" aria-label="Toggle ambient sound">
+    <div class="sound-bars">
+      <span></span><span></span><span></span><span></span>
+    </div>
+    
+    <svg class="speaker-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M11 5L6 9H3v6h3l5 4V5z" fill="currentColor"/>
+      <path class="wave-outer" d="M15.54 8.46a5 5 0 0 1 0 7.07" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      <path class="wave-inner" d="M18.36 5.64a9 9 0 0 1 0 12.72" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      
+      <line class="mute-x1" x1="15" y1="9" x2="21" y2="15" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      <line class="mute-x2" x1="21" y1="9" x2="15" y2="15" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+    </svg>
+  </button>
+
   <h1>Jardin du Temps</h1>
 
   <div class="sprout-banner">
@@ -15,62 +33,50 @@
       <ul>
         <li><a href="../page2/oak.html">Oak</a></li>
         <li><a href="../page3/pine.html">Pine</a></li>
+        <li><a href="../page4/birch.html">Birch</a></li>
+        <li><a href="../page5/willow.html">Willow</a></li>
       </ul>
     </div>
-
     <div class="main-banner-front">
       <div class="sprout-bg"></div>
       <img src="pic/baby-plant.png" class="sprout-icon" />
-      <div class="banner-lines">
-        <span></span><span></span><span></span>
-      </div>
+      <div class="banner-lines"><span></span><span></span><span></span></div>
     </div>
   </div>
 </header>
 
-
 <section class="parallax-scene">
 
-<!-- SKY -->
-<div class="layer layer-sky" data-speed="0.12">
-  <img class="season season-spring" src="pic/spring_sky.png" />
-  <img class="season season-summer" src="pic/summer_sky.png" />
-  <img class="season season-autumn" src="pic/autumn_sky.png" />
-  <img class="season season-winter" src="pic/winter_sky.png" />
-</div>
 
-<!-- CLOUD -->
-<div class="layer layer-cloud" data-speed="0.22">
-  <img class="season season-spring" src="pic/spring_cloud.png" />
-  <img class="season season-summer" src="pic/summer_cloud.png" />
-  <img class="season season-winter" src="pic/winter_cloud.png" />
-</div>
+  <div class="scene-bg" id="bg-spring"  style="background-image:url('pic/spring.png')"></div>
+  <div class="scene-bg" id="bg-summer"  style="background-image:url('pic/summer.png')"></div>
+  <div class="scene-bg" id="bg-autumn"  style="background-image:url('pic/autumn.png')"></div>
+  <div class="scene-bg" id="bg-winter"  style="background-image:url('pic/winter.png')"></div>
 
-<!-- TREE -->
-<div class="layer layer-tree" data-speed="0.45">
-  <img class="season season-spring" src="pic/spring_tree.png" />
-  <img class="season season-summer" src="pic/summer_tree.png" />
-  <img class="season season-autumn" src="pic/autumn_tree.png" />
-  <img class="season season-winter" src="pic/winter_tree.png" />
-</div>
+  
+  <div class="season-caption" id="cap-spring">
+    <p>When the first blossom dares to open,</p>
+    <p>the world remembers how to hope.</p>
+  </div>
+  <div class="season-caption" id="cap-summer">
+    <p>Beneath the canopy of green,</p>
+    <p>time stretches long and unhurried.</p>
+  </div>
+  <div class="season-caption" id="cap-autumn">
+    <p>Every falling leaf is a page turned</p>
+    <p>in the quiet book of seasons.</p>
+  </div>
+  <div class="season-caption" id="cap-winter">
+    <p>In silence and snow,</p>
+    <p>the forest holds its breath and dreams.</p>
+  </div>
 
-<!-- GRASS -->
-<div class="layer layer-grass" data-speed="0.75">
-  <img class="season season-spring" src="pic/spring_grass.png" />
-  <img class="season season-summer" src="pic/summer_grass.png" />
-  <img class="season season-autumn" src="pic/autumn_grass.png" />
-  <img class="season season-winter" src="pic/winter_grass.png" />
-</div>
-
-
-  <!-- TEXT CONTENT -->
+  
   <div class="scene-content">
     <div class="left-block">
-      <h2>WELCOME TO JARDIN DU TEMPS</h2>
-      <p>Jardin du Temps is a digital garden</p>
-      <p>that explores the growth of trees through time.</p>
-      <p>This website allows you to observe how a tree develops</p>
-      <p>from its earliest stage to full maturity, and into the future.</p>
+      <h2>WELCOME TO<br>JARDIN DU TEMPS</h2>
+      <p>Jardin du Temps is a digital garden that explores the growth of trees through time.</p>
+      <p>This website allows you to observe how a tree develops from its earliest stage to full maturity, and into the future.</p>
     </div>
 
     <div class="right-block">
@@ -83,10 +89,13 @@
     </div>
   </div>
 
-</section>
+  
+  <div class="scroll-hint" id="scrollHint">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
 
-
-<section class="scroll-space">
 </section>
 
 <script src="main.js"></script>
